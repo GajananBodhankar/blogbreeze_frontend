@@ -17,10 +17,10 @@ function App() {
     let formData = new FormData();
     console.log(file);
     formData.append("image", file);
-    formData.append("title", "React Hooks in Action");
+    formData.append("title", "JavaScript Basic");
     formData.append(
       "content",
-      "Dive into the power of React Hooks. Simplify your functional components, manage state, and handle side effects with ease."
+      "Delve into backend development using Node.js. Build scalable and efficient server-side applications with JavaScript."
     );
     formData.append(
       "related_links",
@@ -33,7 +33,7 @@ function App() {
     try {
       let response = await axios.post(
         // `${apiEndPoint}/blogs/gargi_18`,
-        "https://blogbreeze-hjk7.onrender.com/blogbreeze/blogs/srinath_4",
+        "https://blogbreeze-46cn.onrender.com/blogbreeze/blogs/srinath_4",
         // "http://localhost:3000/blogbreeze/blogs/srinath_4",
         formData
       );
@@ -44,61 +44,61 @@ function App() {
   }
 
   return (
-    // <StyledEngineProvider injectFirst>
-    //   <ContextProvider>
-    //     <BrowserRouter>
-    //       <Routes>
-    //         <Route index path="/" Component={Home} />
-    //         <Route path="/login" Component={Login} />
-    //         <Route path="/register" Component={Register} />
-    //         <Route path="/blogs" Component={Blogs} />
-    //       </Routes>
-    //     </BrowserRouter>
-    //   </ContextProvider>
-    // </StyledEngineProvider>
-    <Box>
-      <TextField
-        multiline
-        maxRows={20}
-        fullWidth
-        inputProps={{
-          style: {
-            minHeight: "300px",
-            maxHeight: "310px",
-            overflow: "scroll",
-          },
-        }}
-      />
-      <TextField
-        type="file"
-        onChange={(e) => {
-          console.log(e.target.files[0]);
-          setFile(e.target.files[0]);
-        }}
-      />
-      <Button onClick={() => handleSubmit()}>CLick</Button>
-      <Button
-        onClick={async () => {
-          let response = await axios.get(
-            "https://blogbreeze-backend.onrender.com/blogbreeze/blogs/all"
-          );
-          if (response.data) {
-            console.log(response.data);
-          }
-          let result = response.data.map(
-            (i: { image: any }) =>
-              `https://blogbreeze-backend.onrender.com/images/${i.image}`
-          );
-          console.log(result, typeof result, result[0]);
-          setImage(Array.from(result));
-        }}
-      >
-        get all
-      </Button>
-      {image?.map((i, j) => (
-        <Box component={"img"} src={i} key={j} height={"500px"} />
-      ))}
-    </Box>
+    <StyledEngineProvider injectFirst>
+      <ContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" Component={Home} />
+            <Route path="/login" Component={Login} />
+            <Route path="/register" Component={Register} />
+            <Route path="/blogs" Component={Blogs} />
+          </Routes>
+        </BrowserRouter>
+      </ContextProvider>
+    </StyledEngineProvider>
+    // <Box>
+    //   <TextField
+    //     multiline
+    //     maxRows={20}
+    //     fullWidth
+    //     inputProps={{
+    //       style: {
+    //         minHeight: "300px",
+    //         maxHeight: "310px",
+    //         overflow: "scroll",
+    //       },
+    //     }}
+    //   />
+    //   <TextField
+    //     type="file"
+    //     onChange={(e) => {
+    //       console.log(e.target.files[0]);
+    //       setFile(e.target.files[0]);
+    //     }}
+    //   />
+    //   <Button onClick={() => handleSubmit()}>CLick</Button>
+    //   <Button
+    //     onClick={async () => {
+    //       let response = await axios.get(
+    //         "https://blogbreeze-backend.onrender.com/blogbreeze/blogs/all"
+    //       );
+    //       if (response.data) {
+    //         console.log(response.data);
+    //       }
+    //       let result = response.data.map(
+    //         (i: { image: any }) =>
+    //           `https://blogbreeze-backend.onrender.com/images/${i.image}`
+    //       );
+    //       console.log(result, typeof result, result[0]);
+    //       setImage(Array.from(result));
+    //     }}
+    //   >
+    //     get all
+    //   </Button>
+    //   {image?.map((i, j) => (
+    //     <Box component={"img"} src={i} key={j} height={"500px"} />
+    //   ))}
+    // </Box>
   );
 }
 

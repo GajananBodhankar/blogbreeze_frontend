@@ -1,4 +1,14 @@
-import { Box, Grid, Stack, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Navbar from "./Navbar";
 import Footer from "./footer";
 import "./blogs.css";
@@ -8,6 +18,15 @@ import { useEffect, useState } from "react";
 import Sidebar from "../helper/Sidebar";
 import { getAllBlogs } from "../api/apicalls";
 import { imageEndpoint } from "../config";
+import {
+  Favorite,
+  FavoriteBorderOutlined,
+  HeartBrokenRounded,
+  MonitorHeartRounded,
+  ThumbUp,
+  ThumbUpOffAltOutlined,
+} from "@mui/icons-material";
+import { Link } from "react-router-dom";
 function Blogs() {
   const { mode } = MainContext();
   const [allBlogs, setAllBlogs] = useState<Array<Object>>();
@@ -22,42 +41,68 @@ function Blogs() {
     <Box className="mainContainer">
       <Navbar />
       <Grid container>
-        <Grid item sm={3} md={2}>
-          <Sidebar isFixed={false} />
-        </Grid>
+        {!media && (
+          <Grid item sm={3} md={2}>
+            <Sidebar isFixed={false} />
+          </Grid>
+        )}
         {!media ? (
-          <Grid container sm={9} md={10} gap={5} padding={1}>
-            {allBlogs?.map((blog: any) => {
+          <Grid
+            container
+            sm={9}
+            md={10}
+            gap={{ md: 4, sm: 5, lg: 4 }}
+            padding={1}
+          >
+            {allBlogs?.map((blog: any, index: number) => {
               return (
-                <Grid
-                  item
-                  md={3}
-                  style={{
-                    maxWidth: "30%",
-                    flexBasis: "30%",
-                  }}
-                >
-                  <img src={`${imageEndpoint}/${blog.image}`} alt="" />
-                  <Typography>{blog.title}</Typography>
-                  <Typography>{blog.description}</Typography>
-
-                  laudantium maxime facilis.
-                </Grid>
+                index < 9 && (
+                  <Grid item md={3} sm={5} lg={4} className="blogItems">
+                    <Card className="card">
+                      <CardMedia
+                        component="img"
+                        className="cardMedia"
+                        image={`${imageEndpoint}/${blog.image}`}
+                        alt="Image not found"
+                      />
+                      <CardContent>
+                        <Typography style={{fontSize:'x-large'}}>
+                          {blog.title.length > 40
+                            ? blog.title.slice(0, 40) + "..."
+                            : blog.title}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <ThumbUp style={{ color: "#007fff" }} />
+                        <ThumbUpOffAltOutlined />
+                        <Favorite style={{ color: "red" }} />
+                        <FavoriteBorderOutlined />
+                        <Link to={""}>Read More</Link>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                )
               );
             })}
           </Grid>
         ) : (
-          <Grid item xs={12} sx={{ backgroundColor: "red" }}>
-            {allBlogs?.map((blog: any) => {
+          <>
+            {allBlogs?.map((blog: any, index: number) => {
               return (
-                <Grid item>
-                  <img src={blog.image} alt="" />
-                  <Typography>{blog.title}</Typography>
-                  <Typography>{blog.description}</Typography>
-                </Grid>
+                index < 9 && (
+                  <Grid item sm={6}>
+                    <img
+                      src={`${imageEndpoint}/${blog.image}`}
+                      width={"100%"}
+                      alt=""
+                    />
+                    <Typography>{blog.title}</Typography>
+                    <Typography>{blog.description}</Typography>
+                  </Grid>
+                )
               );
             })}
-          </Grid>
+          </>
         )}
       </Grid>
       <Sidebar isFixed={true} />

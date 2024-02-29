@@ -1,3 +1,3 @@
 export let apiEndPoint: string =
-  "https://blogbreeze-hjk7.onrender.com/blogbreeze";
-export let imageEndpoint='https://blogbreeze-backend.onrender.com/images'
+  "https://blogbreeze-46cn.onrender.com/blogbreeze";
+export let imageEndpoint='https://blogbreeze-46cn.onrender.com/images'
