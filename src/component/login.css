@@ -1,0 +1,64 @@
+.stackLight {
+  border: 1px solid black;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column !important;
+  border-radius: 4px;
+}
+.input {
+  background-color: transparent;
+  border-radius: 8px;
+  border-color: rgb(249, 249, 249) !important;
+  color: black !important;
+}
+.inputText {
+  color: white !important;
+}
+.darkInput {
+  border-color: white !important;
+}
+.input:focus {
+  color: white !important;
+  border-color: white !important;
+  outline-color: white !important;
+}
+.stackDark {
+  border: 1px solid white;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column !important;
+  border-radius: 4px;
+  color: white;
+}
+
+.submitLight {
+  width: 30%;
+  align-self: center;
+}
+.submitDark {
+  width: 30%;
+  align-self: center;
+  background-color: orange !important;
+}
+/* DONt have an account, register */
+.account {
+  text-align: center;
+}
+
+.linkDark {
+  color: orange;
+  text-decoration: underline;
+}
+.linkLight {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+.loginImage {
+  height: 100%;
+  width: 50%;
+  align-self: center;
+  border-radius: 4px;
+}

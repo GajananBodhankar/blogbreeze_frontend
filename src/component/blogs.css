@@ -1,0 +1,99 @@
+.sidebarLight {
+  min-height: 100vh;
+  height: 100%;
+  width: 150px;
+  position: relative;
+  color: white;
+  background-color: var(--navbagLight);
+}
+.sidebarDark {
+  height: 100vh;
+  width: 150px;
+  color: white;
+  position: relative;
+  background-color: var(--navbarDark);
+}
+.sidebarDark > div {
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+}
+.sidebarDark > div:hover,
+.sidebarLight > div:hover {
+  cursor: pointer;
+}
+.sidebarLight > div {
+  display: flex;
+  padding: 1rem;
+  gap: 10px;
+}
+
+.sidebarFixedDark {
+  height: 100vh;
+  width: 0px;
+  color: white;
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  transition: all 500ms ease-in-out;
+}
+.sidebarFixedLight {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 0px;
+  overflow: hidden;
+  transition: all 500ms ease-in-out;
+}
+.sidebarFixedLight > div {
+  display: flex;
+  gap: 10px;
+  width: 150px;
+  padding: 0.8rem;
+}
+.sidebarFixedDark > div {
+  display: flex;
+  gap: 10px;
+  padding: 0.8rem;
+  width: 150px;
+}
+.sidebarFixedLightShow {
+  height: 100vh;
+  width: 150px;
+  overflow: hidden;
+  color: white;
+  position: fixed;
+  background-color: var(--navbagLight);
+  transition: all 500ms ease-in-out;
+}
+.sidebarFixedDarkShow {
+  height: 100vh;
+  width: 150px;
+  color: white;
+  position: fixed;
+  overflow: hidden;
+  background-color: var(--navbarDark);
+  transition: all 500ms ease-in-out;
+}
+.sidebarFixedDarkShow > div {
+  display: flex;
+  gap: 10px;
+  width: 150px;
+  padding: 0.8rem;
+}
+
+.sidebarFixedLightShow > div {
+  display: flex;
+  padding: 0.8rem;
+  width: 150px;
+  gap: 10px;
+}
+@media screen and (max-width: 768px) {
+  .sidebarLight {
+    display: none;
+  }
+  .sidebarDark {
+    display: none;
+  }
+}

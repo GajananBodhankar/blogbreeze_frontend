@@ -1,0 +1,8 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --navbagLight: rgb(122, 50, 122);
+  --navbarDark: #1f2937;
+}

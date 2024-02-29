@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+      }
+      .item {
+        height: 10vh;
+        border: 1px solid black;
+        width: calc(33.33% - 50px);
+        border: 1px solid black;
+        flex-grow: 1;
+      }
+      @media screen and (min-width: 572px) and (max-width: 768px) {
+        .item {
+          width: calc(50% - 50px);
+        }
+      }
+      @media screen and (max-width: 572px) {
+        .item {
+          width: calc(100% - 50px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+  </body>
+</html>
