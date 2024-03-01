@@ -1,5 +1,4 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
 import { handleSidebarColor } from "./helperOne.ts";
 import { MainContext } from "../component/context.tsx";
 import { CloseOutlined } from "@mui/icons-material";
