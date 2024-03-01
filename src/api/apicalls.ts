@@ -40,7 +40,7 @@ async function loginApiCall(
 }
 
 async function getAllBlogs(
-  data: Array<Object> | undefined,
+  _data: Array<Object> | undefined,
   setData: (arg0: Array<Object>) => void
 ) {
   try {
