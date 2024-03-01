@@ -5,7 +5,6 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -17,16 +16,10 @@ import { useEffect, useState } from "react";
 
 import Sidebar from "../helper/Sidebar";
 import { getAllBlogs } from "../api/apicalls";
-import { imageEndpoint } from "../config";
-import {
-  Favorite,
-  FavoriteBorderOutlined,
-  HeartBrokenRounded,
-  MonitorHeartRounded,
-  ThumbUp,
-  ThumbUpOffAltOutlined,
-} from "@mui/icons-material";
+import { apiEndPoint, imageEndpoint } from "../config";
+import { Favorite, ThumbUp, ThumbUpAltOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import axios from "axios";
 function Blogs() {
   const { mode } = MainContext();
   const [allBlogs, setAllBlogs] = useState<Array<Object>>();
@@ -40,6 +33,7 @@ function Blogs() {
   return (
     <Box className="mainContainer">
       <Navbar />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>
@@ -62,22 +56,42 @@ function Blogs() {
                       <CardMedia
                         component="img"
                         className="cardMedia"
-                        image={`${imageEndpoint}/${blog.image}`}
+                        image={blog.image}
                         alt="Image not found"
                       />
                       <CardContent>
-                        <Typography style={{fontSize:'x-large'}}>
+                        <Typography style={{ fontSize: "x-large" }}>
                           {blog.title.length > 40
                             ? blog.title.slice(0, 40) + "..."
                             : blog.title}
                         </Typography>
+                        {blog.id}
                       </CardContent>
                       <CardActions>
-                        <ThumbUp style={{ color: "#007fff" }} />
-                        <ThumbUpOffAltOutlined />
+                        {blog.likedUsers.includes(
+                          localStorage.getItem("user")
+                        ) ? (
+                          <ThumbUp style={{ color: "#007fff" }} />
+                        ) : (
+                          <ThumbUpAltOutlined />
+                        )}
                         <Favorite style={{ color: "red" }} />
-                        <FavoriteBorderOutlined />
-                        <Link to={""}>Read More</Link>
+                        {/* <FavoriteBorderOutlined /> */}
+                        <Link
+                          to={"#"}
+                          onClick={async () => {
+                            let result = await axios.put(
+                              `${apiEndPoint}/blogs/likes/${localStorage.getItem(
+                                "user"
+                              )}/${blog.id}`,
+                              blog
+                            );
+                            console.log(result.data);
+                            getAllBlogs(allBlogs, setAllBlogs);
+                          }}
+                        >
+                          Read More
+                        </Link>
                       </CardActions>
                     </Card>
                   </Grid>

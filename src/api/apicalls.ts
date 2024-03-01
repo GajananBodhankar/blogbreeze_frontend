@@ -47,6 +47,7 @@ async function getAllBlogs(
     let response: AxiosResponse = await axios.get(`${apiEndPoint}/blogs/all`);
     if (response.status == 200) {
       setData(response.data);
+      console.log(response.data)
     }
   } catch (error) {
     console.log(error);
