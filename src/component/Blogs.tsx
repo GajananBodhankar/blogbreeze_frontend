@@ -15,7 +15,7 @@ import { MainContext } from "./context";
 import { useEffect, useState } from "react";
 
 import Sidebar from "../helper/Sidebar";
-import { getAllBlogs } from "../api/apicalls";
+import { getAllBlogs, handleLikes } from "../api/apicalls";
 import { apiEndPoint, imageEndpoint } from "../config";
 import { Favorite, ThumbUp, ThumbUpAltOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -71,25 +71,22 @@ function Blogs() {
                         {blog.likedUsers.includes(
                           localStorage.getItem("user")
                         ) ? (
-                          <ThumbUp style={{ color: "#007fff" }} />
+                          <ThumbUp
+                            style={{ color: "#007fff" }}
+                            onClick={async () =>
+                              await handleLikes(blog, allBlogs, setAllBlogs)
+                            }
+                          />
                         ) : (
-                          <ThumbUpAltOutlined />
+                          <ThumbUpAltOutlined
+                            onClick={async () =>
+                              await handleLikes(blog, allBlogs, setAllBlogs)
+                            }
+                          />
                         )}
                         <Favorite style={{ color: "red" }} />
                         {/* <FavoriteBorderOutlined /> */}
-                        <Link
-                          to={"#"}
-                          onClick={async () => {
-                            let result = await axios.put(
-                              `${apiEndPoint}/blogs/likes/${localStorage.getItem(
-                                "user"
-                              )}/${blog.id}`,
-                              blog
-                            );
-                            console.log(result.data);
-                            getAllBlogs(allBlogs, setAllBlogs);
-                          }}
-                        >
+                        <Link to={"#"} onClick={async () => {}}>
                           Read More
                         </Link>
                       </CardActions>

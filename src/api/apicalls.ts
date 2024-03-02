@@ -47,11 +47,28 @@ async function getAllBlogs(
     let response: AxiosResponse = await axios.get(`${apiEndPoint}/blogs/all`);
     if (response.status == 200) {
       setData(response.data);
-      console.log(response.data)
     }
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 }
 
-export { loginApiCall, getAllBlogs };
+async function handleLikes(
+  blog: { id: any },
+  allBlogs: Object[] | undefined,
+  setAllBlogs: {
+    (value: SetStateAction<Object[] | undefined>): void;
+    (value: SetStateAction<Object[] | undefined>): void;
+    (arg0: Object[]): void;
+  }
+) {
+  let result = await axios.put(
+    `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog.id}`,
+    blog
+  );
+  if (result.data.success) {
+    getAllBlogs(allBlogs, setAllBlogs);
+  }
+}
+
+export { loginApiCall, getAllBlogs, handleLikes };

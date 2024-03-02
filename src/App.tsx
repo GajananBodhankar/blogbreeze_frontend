@@ -1,6 +1,12 @@
 import Home from "./component/Home";
 import "./index.css";
-import { Route, BrowserRouter, Routes } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter,
+  Routes,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Login from "./component/Login";
 import { ContextProvider } from "./component/context";
 import Register from "./component/Register";
@@ -36,18 +42,28 @@ function App() {
   //     console.error("Error uploading image:", error.response);
   //   }
   // }
-
+  const Router = createBrowserRouter([
+    {
+      path: "/",
+      Component: Home,
+    },
+    {
+      path: "/login",
+      Component: Login,
+    },
+    {
+      path: "/register",
+      Component: Register,
+    },
+    {
+      path: "/blogs",
+      Component: Blogs,
+    },
+  ]);
   return (
     <StyledEngineProvider injectFirst>
       <ContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route index path="/" Component={Home} />
-            <Route path="/login" Component={Login} />
-            <Route path="/register" Component={Register} />
-            <Route path="/blogs" Component={Blogs} />
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={Router} />
       </ContextProvider>
     </StyledEngineProvider>
     // <Box>
