@@ -16,10 +16,9 @@ import { useEffect, useState } from "react";
 
 import Sidebar from "../helper/Sidebar";
 import { getAllBlogs, handleLikes } from "../api/apicalls";
-import { apiEndPoint, imageEndpoint } from "../config";
+import { imageEndpoint } from "../config";
 import { Favorite, ThumbUp, ThumbUpAltOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 function Blogs() {
   const { mode } = MainContext();
   const [allBlogs, setAllBlogs] = useState<Array<Object>>();
@@ -86,9 +85,7 @@ function Blogs() {
                         )}
                         <Favorite style={{ color: "red" }} />
                         {/* <FavoriteBorderOutlined /> */}
-                        <Link to={"#"} onClick={async () => {}}>
-                          Read More
-                        </Link>
+                        <Link to={"#"}>Read More</Link>
                       </CardActions>
                     </Card>
                   </Grid>
