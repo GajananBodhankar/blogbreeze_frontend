@@ -4,26 +4,32 @@ import { MainContext } from "../component/context.tsx";
 import { CloseOutlined } from "@mui/icons-material";
 import BlogIcon from "../assets/writer_3079998.png";
 import Posts from "../assets/social-media_13665988.png";
-import Favourites from "../assets/favourite_9489928.png";
+import Favorites from "../assets/favourite_9489928.png";
+import { useNavigate } from "react-router-dom";
 function Sidebar({ isFixed }: any) {
   const { mode } = MainContext();
+  const navigate = useNavigate();
   if (!isFixed) {
     return (
       <Stack className={mode == "light" ? "sidebarLight" : "sidebarDark"}>
         <hr />
-        <Box>
+        <Box
+          onClick={() => {
+            navigate("/blogs", { replace: true });
+          }}
+        >
           <Typography variant="body1">Blogs</Typography>
           <img src={BlogIcon} alt="" width={"20%"} height={"max-content"} />
         </Box>
         <hr />
-        <Box>
+        <Box onClick={() => navigate("/favorites", { replace: true })}>
           <Typography variant="body1">My Posts</Typography>
           <img src={Posts} alt="" width={"20%"} height={"max-content"} />
         </Box>
         <hr />
-        <Box>
-          <Typography variant="body1">Favourites</Typography>
-          <img src={Favourites} alt="" width={"20%"} height={"max-content"} />
+        <Box onClick={() => navigate("/posts", { replace: true })}>
+          <Typography variant="body1">Favorites</Typography>
+          <img src={Favorites} alt="" width={"20%"} height={"max-content"} />
         </Box>
         <hr />
       </Stack>
@@ -52,8 +58,8 @@ function Sidebar({ isFixed }: any) {
       </Box>
       <hr />
       <Box>
-        <p>Favourites</p>
-        <img src={Favourites} alt="" width={"20%"} height={"max-content"} />
+        <p>Favorites</p>
+        <img src={Favorites} alt="" width={"20%"} height={"max-content"} />
       </Box>
       <hr />
     </Stack>

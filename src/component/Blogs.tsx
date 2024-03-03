@@ -25,11 +25,16 @@ import Pagination from "../helper/Pagination";
 function Blogs() {
   const [allBlogs, setAllBlogs] = useState<any>();
   const media = useMediaQuery("(max-width:768px)");
-  const [likesLoader, setLikesLoader] = useState<boolean>(false);
+  const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getAllBlogs(allBlogs, setAllBlogs, page);
+    async function callGetAllBlogs() {
+      setContentLoader(true);
+      await getAllBlogs(allBlogs, setAllBlogs, page);
+      setContentLoader(false);
+    }
+    callGetAllBlogs();
   }, []);
   return (
     <Box className="mainContainer">
@@ -75,27 +80,27 @@ function Blogs() {
                         <ThumbUp
                           style={{ color: "#007fff" }}
                           onClick={async () => {
-                            setLikesLoader(true);
+                            setContentLoader(true);
                             await handleLikes(
                               blog,
                               allBlogs,
                               setAllBlogs,
                               page
                             );
-                            setLikesLoader(false);
+                            setContentLoader(false);
                           }}
                         />
                       ) : (
                         <ThumbUpAltOutlined
                           onClick={async () => {
-                            setLikesLoader(true);
+                            setContentLoader(true);
                             await handleLikes(
                               blog,
                               allBlogs,
                               setAllBlogs,
                               page
                             );
-                            setLikesLoader(false);
+                            setContentLoader(false);
                           }}
                         />
                       )}
@@ -113,7 +118,7 @@ function Blogs() {
               setAllBlogs={setAllBlogs}
               setPage={setPage}
             />
-            <Dialog open={likesLoader}>
+            <Dialog open={contentLoader}>
               <DialogTitle>
                 <CircularProgress />
               </DialogTitle>
