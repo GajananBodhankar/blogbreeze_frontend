@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "./home.css";
 import Footer from "./footer";
 import { Box, Grid } from "@mui/material";
-import { Outlet, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { goToLogin, goToRegister } from "./functions";
 import { MainContext } from "./context";
 import { LazyLoadImage } from "react-lazy-load-image-component";

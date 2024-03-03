@@ -41,10 +41,13 @@ async function loginApiCall(
 
 async function getAllBlogs(
   _data: Array<Object> | undefined,
-  setData: (arg0: Array<Object>) => void
+  setData: (arg0: Array<Object>) => void,
+  page: number
 ) {
   try {
-    let response: AxiosResponse = await axios.get(`${apiEndPoint}/blogs/all`);
+    let response: AxiosResponse = await axios.get(
+      `${apiEndPoint}/blogs/all?page=${page}`
+    );
     if (response.status == 200) {
       setData(response.data);
     }
@@ -60,14 +63,15 @@ async function handleLikes(
     (value: SetStateAction<Object[] | undefined>): void;
     (value: SetStateAction<Object[] | undefined>): void;
     (arg0: Object[]): void;
-  }
+  },
+  page: number
 ) {
   let result = await axios.put(
     `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog.id}`,
     blog
   );
   if (result.data.success) {
-    getAllBlogs(allBlogs, setAllBlogs);
+    getAllBlogs(allBlogs, setAllBlogs, page);
   }
 }
 
