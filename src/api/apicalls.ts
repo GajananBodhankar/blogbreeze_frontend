@@ -63,13 +63,12 @@ async function getUserFavorites(setFavorites: {
 }) {
   try {
     let response = await axios.get(
-      `http://localhost:3000/blogbreeze/blogs/user/${localStorage.getItem(
-        "user"
-      )}`
+      `${apiEndPoint}/blogs/user/${localStorage.getItem("user")}`
     );
     if (response.status == 200) {
-      setFavorites(response.data);
+      setFavorites(response.data[0].blogs);
     }
+    console.log(response.data[0].blogs);
   } catch (e: any) {
     alert(e.response.data.message);
   }

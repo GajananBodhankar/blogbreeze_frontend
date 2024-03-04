@@ -69,6 +69,8 @@ function Blogs() {
             padding={1}
             position={"relative"}
             marginBottom={10}
+            display={"flex"}
+            justifyContent={"center"}
           >
             {allBlogs?.data.map((blog: any) => {
               return (
