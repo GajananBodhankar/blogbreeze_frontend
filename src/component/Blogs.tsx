@@ -94,19 +94,22 @@ function Blogs() {
                       {blog.likedUsers.includes(
                         localStorage.getItem("user")
                       ) ? (
-                        <ThumbUp
-                          style={{ color: "#007fff" }}
-                          onClick={async () => {
-                            setContentLoader(true);
-                            await handleLikes(
-                              blog,
-                              allBlogs,
-                              setAllBlogs,
-                              page
-                            );
-                            setContentLoader(false);
-                          }}
-                        />
+                        <>
+                          <ThumbUp
+                            style={{ color: "#007fff" }}
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleLikes(
+                                blog,
+                                allBlogs,
+                                setAllBlogs,
+                                page
+                              );
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
                       ) : (
                         <ThumbUpAltOutlined
                           onClick={async () => {

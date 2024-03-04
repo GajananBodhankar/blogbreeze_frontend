@@ -51,7 +51,7 @@ async function getAllBlogs(
     if (response.status == 200) {
       setData(response.data);
     }
-    console.log("allblogs");
+    console.log(response.data);
   } catch (error) {
     alert(error);
   }
@@ -63,12 +63,12 @@ async function getUserFavorites(setFavorites: {
 }) {
   try {
     let response = await axios.get(
-      `${apiEndPoint}/blogs/user/${localStorage.getItem("user")}`
+      `${apiEndPoint}/blogs/favorites/${localStorage.getItem("user")}`
     );
     if (response.status == 200) {
-      setFavorites(response.data[0].blogs);
+      setFavorites(response.data);
     }
-    console.log(response.data[0].blogs);
+    console.log(response.data);
   } catch (e: any) {
     alert(e.response.data.message);
   }
@@ -85,9 +85,7 @@ async function handleAddFavorite(
 ) {
   try {
     let res = await axios.put(
-      `http://localhost:3000/blogbreeze/blogs/favorite/${localStorage.getItem(
-        "user"
-      )}`,
+      `${apiEndPoint}/blogs/favorite/${localStorage.getItem("user")}`,
       blog
     );
     if (res.data.success) {
@@ -111,14 +109,13 @@ async function handleLikes(
   },
   page: number
 ) {
+  console.log(blog);
   let result = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-      "user"
-    )}/${blog._id}`,
+    `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
     blog
   );
   if (result.data.success) {
-    getAllBlogs(allBlogs, setAllBlogs, page);
+    await getAllBlogs(allBlogs, setAllBlogs, page);
   }
 }
 

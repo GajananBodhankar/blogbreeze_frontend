@@ -22,12 +22,12 @@ function Sidebar({ isFixed }: any) {
           <img src={BlogIcon} alt="" width={"20%"} height={"max-content"} />
         </Box>
         <hr />
-        <Box onClick={() => navigate("/favorites", { replace: true })}>
+        <Box onClick={() => navigate("/posts", { replace: true })}>
           <Typography variant="body1">My Posts</Typography>
           <img src={Posts} alt="" width={"20%"} height={"max-content"} />
         </Box>
         <hr />
-        <Box onClick={() => navigate("/posts", { replace: true })}>
+        <Box onClick={() => navigate("/favorites", { replace: true })}>
           <Typography variant="body1">Favorites</Typography>
           <img src={Favorites} alt="" width={"20%"} height={"max-content"} />
         </Box>
