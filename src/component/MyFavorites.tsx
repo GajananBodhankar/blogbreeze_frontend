@@ -29,7 +29,6 @@ import {
   ThumbUpAltOutlined,
 } from "@mui/icons-material";
 import Pagination from "../helper/Pagination";
-import { imageEndpoint } from "../config";
 
 function MyFavorites() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
@@ -90,6 +89,32 @@ function MyFavorites() {
                       {blog._id}
                     </CardContent>
                     <CardActions>
+                      {blog.likedUsers.includes(
+                        localStorage.getItem("user")
+                      ) ? (
+                        <>
+                          <ThumbUp
+                            style={{ color: "#007fff" }}
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleFavoriteLikes(blog, setFavorites);
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      ) : (
+                        <>
+                          <ThumbUpAltOutlined
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleFavoriteLikes(blog, setFavorites);
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      )}
                       {favorites
                         ?.map((i: { _id: any }) => i._id)
                         .includes(blog._id) ? (

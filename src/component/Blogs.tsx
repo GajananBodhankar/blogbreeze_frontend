@@ -111,18 +111,18 @@ function Blogs() {
                           <p>{blog.likes}</p>
                         </>
                       ) : (
-                        <ThumbUpAltOutlined
-                          onClick={async () => {
-                            setContentLoader(true);
-                            await handleLikes(
-                              blog,
-                              allBlogs,
-                              setAllBlogs,
-                              page
-                            );
-                            setContentLoader(false);
-                          }}
-                        />
+                        <><ThumbUpAltOutlined
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleLikes(
+                                blog,
+                                allBlogs,
+                                setAllBlogs,
+                                page
+                              );
+                              setContentLoader(false);
+                            } } /><p>{blog.likes}</p></>
+
                       )}
                       {favorites
                         ?.map((i: { _id: any }) => i._id)

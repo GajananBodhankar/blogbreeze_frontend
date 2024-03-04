@@ -109,13 +109,33 @@ async function handleLikes(
   },
   page: number
 ) {
-  console.log(blog);
-  let result = await axios.put(
-    `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
+  let result1 = await axios.put(
+    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+      "user"
+    )}/${blog._id}`,
     blog
   );
-  if (result.data.success) {
+  if (result1.data) {
     await getAllBlogs(allBlogs, setAllBlogs, page);
+  }
+}
+
+async function handleFavoriteLikes(
+  blog: { _id: any },
+  setFavorites: { (value: any): void; (arg0: any): void }
+) {
+  console.log(blog);
+  let result1 = await axios.put(
+    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+      "user"
+    )}/${blog._id}`,
+    blog
+  );
+
+  if (result1.data) {
+    await getUserFavorites(setFavorites);
+  } else {
+    alert("error");
   }
 }
 
@@ -125,4 +145,5 @@ export {
   handleLikes,
   getUserFavorites,
   handleAddFavorite,
+  handleFavoriteLikes,
 };
