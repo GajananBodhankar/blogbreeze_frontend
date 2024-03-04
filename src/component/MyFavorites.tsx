@@ -11,7 +11,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./footer";
 import Sidebar from "../helper/Sidebar";
@@ -19,7 +19,6 @@ import {
   getUserFavorites,
   handleAddFavorite,
   handleFavoriteLikes,
-  handleLikes,
 } from "../api/apicalls";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -28,23 +27,20 @@ import {
   ThumbUp,
   ThumbUpAltOutlined,
 } from "@mui/icons-material";
-import Pagination from "../helper/Pagination";
 
 function MyFavorites() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const navigate = useNavigate();
-  const [allBlogs, setAllBlogs] = useState<any>();
-  const [page, setPage] = useState(1);
 
   const media = useMediaQuery("(max-width:768px)");
   useEffect(() => {
-    async function callGetAllBlogs() {
+    async function callGetAllFavorites() {
       setContentLoader(true);
       await getUserFavorites(setFavorites);
       setContentLoader(false);
     }
-    callGetAllBlogs();
+    callGetAllFavorites();
     if (!localStorage.getItem("user")) {
       navigate("/", { replace: true });
     }
@@ -152,15 +148,11 @@ function MyFavorites() {
           </Grid>
         ) : (
           <>
-            {allBlogs?.data.map((blog: any, index: number) => {
+            {favorites.map((blog: any, index: number) => {
               return (
                 index < 9 && (
                   <Grid item sm={6}>
-                    <img
-                      src={`${imageEndpoint}/${blog.image}`}
-                      width={"100%"}
-                      alt=""
-                    />
+                    <img src={`${blog.image}`} width={"100%"} alt="" />
                     <Typography>{blog.title}</Typography>
                     <Typography>{blog.description}</Typography>
                   </Grid>

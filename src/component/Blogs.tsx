@@ -23,7 +23,6 @@ import {
   handleAddFavorite,
   handleLikes,
 } from "../api/apicalls";
-import { imageEndpoint } from "../config";
 import {
   Favorite,
   FavoriteBorder,
@@ -111,7 +110,8 @@ function Blogs() {
                           <p>{blog.likes}</p>
                         </>
                       ) : (
-                        <><ThumbUpAltOutlined
+                        <>
+                          <ThumbUpAltOutlined
                             onClick={async () => {
                               setContentLoader(true);
                               await handleLikes(
@@ -121,8 +121,10 @@ function Blogs() {
                                 page
                               );
                               setContentLoader(false);
-                            } } /><p>{blog.likes}</p></>
-
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
                       )}
                       {favorites
                         ?.map((i: { _id: any }) => i._id)
@@ -170,11 +172,7 @@ function Blogs() {
               return (
                 index < 9 && (
                   <Grid item sm={6}>
-                    <img
-                      src={`${imageEndpoint}/${blog.image}`}
-                      width={"100%"}
-                      alt=""
-                    />
+                    <img src={`${blog.image}`} width={"100%"} alt="" />
                     <Typography>{blog.title}</Typography>
                     <Typography>{blog.description}</Typography>
                   </Grid>
