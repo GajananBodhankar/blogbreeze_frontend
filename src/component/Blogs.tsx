@@ -17,24 +17,39 @@ import "./blogs.css";
 import { useEffect, useState } from "react";
 
 import Sidebar from "../helper/Sidebar";
-import { getAllBlogs, handleLikes } from "../api/apicalls";
+import {
+  getAllBlogs,
+  getUserFavorites,
+  handleAddFavorite,
+  handleLikes,
+} from "../api/apicalls";
 import { imageEndpoint } from "../config";
-import { Favorite, ThumbUp, ThumbUpAltOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import {
+  Favorite,
+  FavoriteBorder,
+  ThumbUp,
+  ThumbUpAltOutlined,
+} from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../helper/Pagination";
 function Blogs() {
   const [allBlogs, setAllBlogs] = useState<any>();
   const media = useMediaQuery("(max-width:768px)");
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [page, setPage] = useState(1);
-
+  const navigate = useNavigate();
+  const [favorites, setFavorites] = useState<any>();
   useEffect(() => {
     async function callGetAllBlogs() {
       setContentLoader(true);
       await getAllBlogs(allBlogs, setAllBlogs, page);
+      await getUserFavorites(setFavorites);
       setContentLoader(false);
     }
     callGetAllBlogs();
+    if (!localStorage.getItem("user")) {
+      navigate("/", { replace: true });
+    }
   }, []);
   return (
     <Box className="mainContainer">
@@ -71,7 +86,7 @@ function Blogs() {
                           ? blog.title.slice(0, 40) + "..."
                           : blog.title}
                       </Typography>
-                      {blog.id}
+                      {blog._id}
                     </CardContent>
                     <CardActions>
                       {blog.likedUsers.includes(
@@ -104,7 +119,27 @@ function Blogs() {
                           }}
                         />
                       )}
-                      <Favorite style={{ color: "red" }} />
+                      {favorites
+                        ?.map((i: { _id: any }) => i._id)
+                        .includes(blog._id) ? (
+                        <Favorite
+                          style={{ color: "red" }}
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+                            setContentLoader(false);
+                          }}
+                        />
+                      ) : (
+                        <FavoriteBorder
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+
+                            setContentLoader(false);
+                          }}
+                        />
+                      )}
                       {/* <FavoriteBorderOutlined /> */}
                       <Link to={"#"}>Read More</Link>
                     </CardActions>
