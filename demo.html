@@ -9,6 +9,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 50px;
+        border: 10px solid red;
       }
       .item {
         height: 10vh;
@@ -16,26 +17,34 @@
         width: calc(33.33% - 50px);
         border: 1px solid black;
         flex-grow: 1;
+        animation: opa 15s ease-in-out forwards;
       }
-      @media screen and (min-width: 572px) and (max-width: 768px) {
-        .item {
-          width: calc(50% - 50px);
+      @keyframes opa {
+        from {
+          opacity: 0;
         }
-      }
-      @media screen and (max-width: 572px) {
-        .item {
-          width: calc(100% - 50px);
+        to {
+          opacity: 1;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
+      <div class="item">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt, soluta
+        maiores enim ab sapiente magni voluptate vel perferendis minus
+        necessitatibus dolor neque! Quis animi debitis sequi quidem temporibus
+        saepe, magnam delectus perferendis illo vitae voluptate maxime nulla
+        explicabo quas repellendus reiciendis aliquam voluptatibus mollitia quod
+        quae odit obcaecati eos enim? Nisi sint soluta excepturi hic deleniti
+        doloremque odio. Aut consequatur distinctio reprehenderit non maxime
+        tenetur excepturi mollitia aliquam eligendi perferendis voluptatem quas
+        explicabo esse veritatis repellendus ipsum quidem exercitationem velit
+        obcaecati pariatur corrupti, accusantium corporis commodi natus. Hic
+        accusantium aliquam aut dolore ipsam, quasi quos soluta tempora
+        temporibus omnis deleniti?
+      </div>
     </div>
   </body>
 </html>

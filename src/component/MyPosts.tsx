@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -28,12 +29,14 @@ import {
   ThumbUpAltOutlined,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { MainContext } from "./context";
 function MyPosts() {
   const media = useMediaQuery("(max-width:768px)");
   const [myPosts, setMyPosts] = useState<any>();
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
+  const { mode } = MainContext();
   useEffect(() => {
     async function getAllPosts() {
       setContentLoader(true);
@@ -125,7 +128,6 @@ function MyPosts() {
                           onClick={async () => {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
-
                             setContentLoader(false);
                           }}
                         />
@@ -137,6 +139,23 @@ function MyPosts() {
               );
             })}
 
+            <Button
+              style={{
+                position: "fixed",
+                display: "flex",
+                alignContent: "center",
+                right: 30,
+                bottom: 30,
+                zIndex: 1,
+                backgroundColor: mode == "light" ? "" : "orange",
+              }}
+              variant="contained"
+            >
+              <CloudUploadIcon />
+              <Typography variant="body1" style={{ marginLeft: 10 }}>
+                Upload
+              </Typography>
+            </Button>
             <Dialog open={contentLoader}>
               <DialogTitle>
                 <CircularProgress />
