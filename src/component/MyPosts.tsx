@@ -19,7 +19,6 @@ import {
   getAllPostsApiCall,
   getUserFavorites,
   handleAddFavorite,
-  handleFavoriteLikes,
   handleMyPostsLikes,
 } from "../api/apicalls";
 import {
