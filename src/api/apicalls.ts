@@ -68,7 +68,6 @@ async function getUserFavorites(setFavorites: {
     if (response.status == 200) {
       setFavorites(response.data);
     }
-    console.log(response.data);
   } catch (e: any) {
     alert(e.response.data.message);
   }
@@ -139,6 +138,37 @@ async function handleFavoriteLikes(
   }
 }
 
+async function getAllPostsApiCall(setAllPosts: (arg0: any) => void) {
+  try {
+    let result = await axios.get(
+      `http://localhost:3000/blogbreeze/blogs/item/${localStorage.getItem(
+        "user"
+      )}`
+    );
+    if (result.data) {
+      setAllPosts(result.data);
+    }
+  } catch (e: any) {
+    alert(e.response.data.message);
+  }
+}
+
+async function handleMyPostsLikes(blog: { _id: any }, setMyPosts: any) {
+  try {
+    let response = await axios.put(
+      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+        "user"
+      )}/${blog._id}`,
+      blog
+    );
+    if (response.data.success) {
+      setMyPosts(response.data.data.blogs);
+    }
+  } catch (error) {
+    alert(`${error}`);
+  }
+}
+
 export {
   loginApiCall,
   getAllBlogs,
@@ -146,4 +176,6 @@ export {
   getUserFavorites,
   handleAddFavorite,
   handleFavoriteLikes,
+  getAllPostsApiCall,
+  handleMyPostsLikes,
 };
