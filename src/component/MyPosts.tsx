@@ -36,8 +36,10 @@ function MyPosts() {
   const [favorites, setFavorites] = useState<any>();
   useEffect(() => {
     async function getAllPosts() {
+      setContentLoader(true);
       await getAllPostsApiCall(setMyPosts);
       await getUserFavorites(setFavorites);
+      setContentLoader(false);
     }
     getAllPosts();
   }, []);
@@ -128,7 +130,6 @@ function MyPosts() {
                           }}
                         />
                       )}
-                      {/* <FavoriteBorderOutlined /> */}
                       <Link to={"#"}>Read More</Link>
                     </CardActions>
                   </Card>
