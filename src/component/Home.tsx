@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "./home.css";
 import Footer from "./footer";
 import { Box, Grid } from "@mui/material";
-import {  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { goToLogin, goToRegister } from "./functions";
 import { MainContext } from "./context";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -39,31 +39,31 @@ function Home() {
           {!isLoggedIn ? (
             <p>
               Ready to dive in?{" "}
-              <a
+              <Link
+                to={{ pathname: "/login" }}
                 className={mode == "light" ? "linkLight" : "linkDark"}
-                onClick={() => goToLogin(navigate, false)}
               >
                 Login
-              </a>{" "}
+              </Link>{" "}
               or{" "}
-              <a
+              <Link
+                to={{ pathname: "/register" }}
                 className={mode == "light" ? "linkLight" : "linkDark"}
-                onClick={() => goToRegister(navigate, false)}
               >
-                Create an Account
-              </a>{" "}
+                Register
+              </Link>{" "}
               to share your own story.
             </p>
           ) : (
             <>
               <p>
                 Checkout{" "}
-                <a
+                <Link
+                  to={{ pathname: "/blogs" }}
                   className={mode == "light" ? "linkLight" : "linkDark"}
-                  onClick={() => navigate("/blogs")}
                 >
                   Blogs
-                </a>
+                </Link>
               </p>
             </>
           )}
