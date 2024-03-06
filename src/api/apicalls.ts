@@ -51,7 +51,6 @@ async function getAllBlogs(
     if (response.status == 200) {
       setData(response.data);
     }
-    console.log(response.data);
   } catch (error) {
     alert(error);
   }
@@ -72,7 +71,28 @@ async function getUserFavorites(setFavorites: {
     alert(e.response.data.message);
   }
 }
-
+async function handleFavoriteLikes(
+  blog: { _id: any },
+  setFavorites: { (value: any): void; (arg0: any): void }
+) {
+  let result1 = await axios.put(
+    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+      "user"
+    )}/${blog._id}`,
+    blog
+  );
+  let result2 = await axios.put(
+    `http://localhost:3000/blogbreeze/blogs/likes/favorite/${localStorage.getItem(
+      "user"
+    )}/${blog._id}`,
+    blog
+  );
+  if (result1.data) {
+    await getUserFavorites(setFavorites);
+  } else {
+    alert("error");
+  }
+}
 async function handleAddFavorite(
   blog: any,
   setFavorites: {
@@ -87,6 +107,7 @@ async function handleAddFavorite(
       `${apiEndPoint}/blogs/favorite/${localStorage.getItem("user")}`,
       blog
     );
+
     if (res.data.success) {
       await getUserFavorites(setFavorites);
       return true;
@@ -114,27 +135,14 @@ async function handleLikes(
     )}/${blog._id}`,
     blog
   );
-  if (result1.data) {
-    await getAllBlogs(allBlogs, setAllBlogs, page);
-  }
-}
-
-async function handleFavoriteLikes(
-  blog: { _id: any },
-  setFavorites: { (value: any): void; (arg0: any): void }
-) {
-  console.log(blog);
-  let result1 = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+  let result2 = await axios.put(
+    `http://localhost:3000/blogbreeze/blogs/likes/favorite/${localStorage.getItem(
       "user"
     )}/${blog._id}`,
     blog
   );
-
   if (result1.data) {
-    await getUserFavorites(setFavorites);
-  } else {
-    alert("error");
+    await getAllBlogs(allBlogs, setAllBlogs, page);
   }
 }
 
@@ -153,7 +161,40 @@ async function getAllPostsApiCall(setAllPosts: (arg0: any) => void) {
   }
 }
 
-async function handleMyPostsLikes(blog: { _id: any }, setMyPosts: any) {
+async function handleMyPostsLikes(
+  blog: {
+    username: any;
+    _id: any;
+  },
+  setMyPosts: any
+) {
+  try {
+    let response = await axios.put(
+      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+        "user"
+      )}/${blog._id}`,
+      blog
+    );
+    // console.log(response.data)
+    if (response.data.success) {
+      let result = response.data.data.blogs.map((i: { _id: any }) => ({
+        ...i,
+        username: blog.username,
+      }));
+      setMyPosts(result);
+    }
+  } catch (error) {
+    alert(`${error}`);
+  }
+}
+
+async function handleViewLikes(
+  blog: {
+    username: any;
+    _id: any;
+  },
+  setData: any
+) {
   try {
     let response = await axios.put(
       `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
@@ -162,13 +203,18 @@ async function handleMyPostsLikes(blog: { _id: any }, setMyPosts: any) {
       blog
     );
     if (response.data.success) {
-      setMyPosts(response.data.data.blogs);
+      let result = response.data.data.blogs.filter(
+        (i: { _id: any }) => i._id == blog._id
+      );
+
+      result[0].username = blog.username;
+
+      setData(...result);
     }
   } catch (error) {
     alert(`${error}`);
   }
 }
-
 export {
   loginApiCall,
   getAllBlogs,
@@ -178,4 +224,5 @@ export {
   handleFavoriteLikes,
   getAllPostsApiCall,
   handleMyPostsLikes,
+  handleViewLikes,
 };

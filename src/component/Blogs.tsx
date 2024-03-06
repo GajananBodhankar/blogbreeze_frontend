@@ -148,7 +148,9 @@ function Blogs() {
                         />
                       )}
                       {/* <FavoriteBorderOutlined /> */}
-                      <Link to={"#"}>Read More</Link>
+                      <Link to={{ pathname: "/view" }} state={blog }>
+                        Read More
+                      </Link>
                     </CardActions>
                   </Card>
                 </Grid>

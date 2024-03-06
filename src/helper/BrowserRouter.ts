@@ -5,6 +5,7 @@ import MyPosts from "../component/MyPosts.tsx";
 import Register from "../component/Register.tsx";
 import Home from "../component/Home.tsx";
 import Login from "../component/Login.tsx";
+import View from "../component/View.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const Router = createBrowserRouter([
   {
     path: "/posts",
     Component: MyPosts,
+  },
+  {
+    path: "/view",
+    Component: View,
   },
 ]);
 export default Router;

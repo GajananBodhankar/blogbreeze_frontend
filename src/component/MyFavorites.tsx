@@ -133,7 +133,9 @@ function MyFavorites() {
                         />
                       )}
                       {/* <FavoriteBorderOutlined /> */}
-                      <Link to={"#"}>Read More</Link>
+                      <Link to={"/View"} state={blog}>
+                        Read More
+                      </Link>
                     </CardActions>
                   </Card>
                 </Grid>

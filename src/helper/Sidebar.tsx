@@ -5,7 +5,7 @@ import { CloseOutlined } from "@mui/icons-material";
 import BlogIcon from "../assets/writer_3079998.png";
 import Posts from "../assets/social-media_13665988.png";
 import Favorites from "../assets/favourite_9489928.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 function Sidebar({ isFixed }: any) {
   const { mode } = MainContext();
