@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import "./navbar.css";
 import { modeChange } from "./functions";
-import { Box, Grid, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Grid,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { MainContext } from "./context";
 import { useNavigate } from "react-router-dom";
 import { AccountCircleRounded, Logout, Menu } from "@mui/icons-material";
+import { handleConfirmClose } from "../helper/helperOne";
 function Navbar() {
   const { mode, setMode } = MainContext();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -13,6 +24,7 @@ function Navbar() {
   const [user, setUser] = useState<any>("");
   const [showMenu, setShowMenu] = useState(false);
   const matches = useMediaQuery("(max-width:768px)");
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
   function handletooltip() {
     setShowMenu(!showMenu);
   }
@@ -90,10 +102,7 @@ function Navbar() {
                         ":hover": { cursor: "pointer" },
                       }}
                       onClick={() => {
-                        localStorage.removeItem("user");
-                        navigate("/", { replace: true });
-                        setLoggedIn(false);
-                        setShowMenu(false);
+                        setConfirmOpen(true);
                       }}
                     >
                       <Logout />
@@ -116,18 +125,29 @@ function Navbar() {
           {mode == "light" ? `dark_mode` : `light_mode`}
         </span>
       </Grid>
+      <Dialog open={confirmOpen}>
+        <DialogTitle>Are you Sure?</DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/", { replace: true });
+              setLoggedIn(false);
+              setShowMenu(false);
+              handleConfirmClose(confirmOpen, setConfirmOpen);
+            }}
+          >
+            Logout
+          </Button>
+          <Button
+            onClick={() => handleConfirmClose(confirmOpen, setConfirmOpen)}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }
 
 export default Navbar;
-// navigate("/", { replace: true });
-// setLoggedIn(false);
-// setShowMenu(false);
-
-// onClick={() => {
-//   localStorage.removeItem("user");
-//   navigate("/", { replace: true });
-//   setLoggedIn(false);
-//   setShowMenu(false);
-// }}

@@ -18,4 +18,11 @@ function handleSidebarColor(mode: string) {
     }
   }
 }
-export { handleSidebarColor };
+
+function handleConfirmClose(
+  confirm: boolean,
+  setConfirm: (arg0: boolean) => void
+) {
+  setConfirm(!confirm);
+}
+export { handleSidebarColor, handleConfirmClose };
