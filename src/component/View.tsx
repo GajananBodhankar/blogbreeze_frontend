@@ -11,10 +11,10 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../helper/Sidebar";
 import Navbar from "./Navbar";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Favorite,
   FavoriteBorder,
@@ -27,6 +27,7 @@ import {
   handleAddFavorite,
   handleViewLikes,
 } from "../api/apicalls";
+import CustomSnackBar from "../helper/CustomSnackBar";
 
 function View() {
   const media = useMediaQuery("(max-width:768px)");
@@ -35,6 +36,8 @@ function View() {
   const { mode } = MainContext();
   const [data, setData] = useState<Object | any>();
   const [favorites, setFavorites] = useState<Array<Object> | any>();
+  const [snack, setSnack] = useState({ open: false, message: "", color: "" });
+
   useEffect(() => {
     async function handler() {
       setContentLoader(true);
@@ -128,6 +131,11 @@ function View() {
                       setContentLoader(true);
                       await handleAddFavorite(data, setFavorites);
                       setContentLoader(false);
+                      setSnack({
+                        ...snack,
+                        open: true,
+                        message: "Removed from favorites",
+                      });
                     }}
                   />
                 ) : (
@@ -136,6 +144,11 @@ function View() {
                       setContentLoader(true);
                       await handleAddFavorite(data, setFavorites);
                       setContentLoader(false);
+                      setSnack({
+                        ...snack,
+                        open: true,
+                        message: "Added to favorites",
+                      });
                     }}
                   />
                 )}
@@ -148,6 +161,7 @@ function View() {
             </Card>
           )}
         </Grid>
+        <CustomSnackBar snack={snack} setSnack={setSnack} />
       </Grid>
     </Box>
   );

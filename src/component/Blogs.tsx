@@ -31,6 +31,7 @@ import {
 } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../helper/Pagination";
+import CustomSnackBar from "../helper/CustomSnackBar";
 function Blogs() {
   const [allBlogs, setAllBlogs] = useState<any>();
   const media = useMediaQuery("(max-width:768px)");
@@ -38,6 +39,8 @@ function Blogs() {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState<any>();
+  const [snack, setSnack] = useState({ open: false, message: "", color: "" });
+
   useEffect(() => {
     async function callGetAllBlogs() {
       setContentLoader(true);
@@ -135,6 +138,11 @@ function Blogs() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Removed from favorites",
+                            });
                           }}
                         />
                       ) : (
@@ -144,11 +152,16 @@ function Blogs() {
                             await handleAddFavorite(blog, setFavorites);
 
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Added to favorites",
+                            });
                           }}
                         />
                       )}
                       {/* <FavoriteBorderOutlined /> */}
-                      <Link to={{ pathname: "/view" }} state={blog }>
+                      <Link to={{ pathname: "/view" }} state={blog}>
                         Read More
                       </Link>
                     </CardActions>
@@ -185,6 +198,7 @@ function Blogs() {
         )}
       </Grid>
       <Sidebar isFixed={true} />
+      <CustomSnackBar snack={snack} setSnack={setSnack} />
 
       <Footer />
     </Box>
