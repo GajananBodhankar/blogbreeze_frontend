@@ -127,7 +127,6 @@ function MyFavorites() {
                           onClick={async () => {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
-
                             setContentLoader(false);
                           }}
                         />

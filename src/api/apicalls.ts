@@ -81,12 +81,7 @@ async function handleFavoriteLikes(
     )}/${blog._id}`,
     blog
   );
-  let result2 = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/favorite/${localStorage.getItem(
-      "user"
-    )}/${blog._id}`,
-    blog
-  );
+
   if (result1.data) {
     await getUserFavorites(setFavorites);
   } else {
@@ -129,20 +124,19 @@ async function handleLikes(
   },
   page: number
 ) {
-  let result1 = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-      "user"
-    )}/${blog._id}`,
-    blog
-  );
-  let result2 = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/favorite/${localStorage.getItem(
-      "user"
-    )}/${blog._id}`,
-    blog
-  );
-  if (result1.data) {
-    await getAllBlogs(allBlogs, setAllBlogs, page);
+  try {
+    let result1 = await axios.put(
+      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
+        "user"
+      )}/${blog._id}`,
+      blog
+    );
+
+    if (result1.data) {
+      await getAllBlogs(allBlogs, setAllBlogs, page);
+    }
+  } catch (e) {
+    alert(`${e}`);
   }
 }
 
@@ -175,7 +169,6 @@ async function handleMyPostsLikes(
       )}/${blog._id}`,
       blog
     );
-    // console.log(response.data)
     if (response.data.success) {
       let result = response.data.data.blogs.map((i: { _id: any }) => ({
         ...i,
@@ -223,6 +216,6 @@ export {
   handleAddFavorite,
   handleFavoriteLikes,
   getAllPostsApiCall,
-  handleMyPostsLikes,
   handleViewLikes,
+  handleMyPostsLikes,
 };

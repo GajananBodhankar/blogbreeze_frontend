@@ -11,10 +11,10 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Sidebar from "../helper/Sidebar";
 import Navbar from "./Navbar";
-import { Link, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import {
   Favorite,
   FavoriteBorder,
