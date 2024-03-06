@@ -76,9 +76,7 @@ async function handleFavoriteLikes(
   setFavorites: { (value: any): void; (arg0: any): void }
 ) {
   let result1 = await axios.put(
-    `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-      "user"
-    )}/${blog._id}`,
+    `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
     blog
   );
 
@@ -126,9 +124,7 @@ async function handleLikes(
 ) {
   try {
     let result1 = await axios.put(
-      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-        "user"
-      )}/${blog._id}`,
+      `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
       blog
     );
 
@@ -143,9 +139,7 @@ async function handleLikes(
 async function getAllPostsApiCall(setAllPosts: (arg0: any) => void) {
   try {
     let result = await axios.get(
-      `http://localhost:3000/blogbreeze/blogs/item/${localStorage.getItem(
-        "user"
-      )}`
+      `${apiEndPoint}/blogs/item/${localStorage.getItem("user")}`
     );
     if (result.data) {
       setAllPosts(result.data);
@@ -164,9 +158,7 @@ async function handleMyPostsLikes(
 ) {
   try {
     let response = await axios.put(
-      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-        "user"
-      )}/${blog._id}`,
+      `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
       blog
     );
     if (response.data.success) {
@@ -190,9 +182,7 @@ async function handleViewLikes(
 ) {
   try {
     let response = await axios.put(
-      `http://localhost:3000/blogbreeze/blogs/likes/${localStorage.getItem(
-        "user"
-      )}/${blog._id}`,
+      `${apiEndPoint}/blogs/likes/${localStorage.getItem("user")}/${blog._id}`,
       blog
     );
     if (response.data.success) {
