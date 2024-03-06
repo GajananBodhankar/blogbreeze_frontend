@@ -3,18 +3,15 @@ import Navbar from "./Navbar";
 import "./home.css";
 import Footer from "./footer";
 import { Box, Grid } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { goToLogin, goToRegister } from "./functions";
+import { Link } from "react-router-dom";
 import { MainContext } from "./context";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Home() {
-  let navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const { mode } = MainContext();
   useEffect(() => {
-    // console.log(mode);
-    // checkScroll();
+    
   }, [mode]);
   useEffect(() => {
     if (localStorage.getItem("user")) {
