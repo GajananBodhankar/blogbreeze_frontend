@@ -35,20 +35,42 @@ textarea {
 input[type="file"] {
   display: none;
 }
-.listStyle {
+.listStyleDark {
   width: max-content;
   border-radius: 4px;
   max-height: 100px;
-  overflow: scroll;
+  overflow-y: scroll;
+  border: 1px solid white;
+  border-top: none;
+}
+.listStyleLight {
+  width: max-content;
+  border-radius: 4px;
+  max-height: 100px;
+  overflow-y: scroll;
   border: 1px solid black;
   border-top: none;
 }
-
-.listStyle p {
+.listStyleLight > ::-webkit-scrollbar {
+  scrollbar-width: thin;
+}
+.listStyleLight p {
   padding: 2px 20px;
   margin-top: 10px;
   align-items: center;
   display: flex;
+  border-bottom: 1px solid black;
+}
+* {
+  scrollbar-width: thin !important;
+}
+
+.listStyleDark p {
+  padding: 2px 20px;
+  margin-top: 10px;
+  align-items: center;
+  display: flex;
+  border-bottom: 1px solid white;
 }
 
 .parentBoxList {
@@ -64,4 +86,11 @@ input[type="file"] {
 }
 .blogTitle {
   width: 70%;
+}
+
+#relatedLinksLight {
+  color: black;
+}
+#relatedLinksDark {
+  color: white;
 }

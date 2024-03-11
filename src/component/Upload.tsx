@@ -113,19 +113,25 @@ function Upload() {
               <TextField
                 name="val"
                 type="text"
+                style={{ width: "70%" }}
                 placeholder="Related Links goes here..."
-                sx={{ width: "70%" }}
+                id={mode == "light" ? "relatedLinksLight" : "relatedLinksDark"}
                 value={val}
                 onChange={(e) => setVal(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e, data, val, setData, setVal)}
               />
               {data?.length ? (
-                <Box className="listStyle">
+                <Box
+                  className={
+                    mode == "light" ? "listStyleLight" : "listStyleDark"
+                  }
+                >
                   {data?.map((item: any, index: number) => (
                     <p>
                       {item}{" "}
                       <Clear
                         fontSize="small"
+                        style={{ marginLeft: 10 }}
                         onClick={() => handleDeleteItem(data, setData, index)}
                       />
                     </p>
