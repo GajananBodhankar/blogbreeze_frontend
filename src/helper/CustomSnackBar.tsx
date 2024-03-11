@@ -28,9 +28,11 @@ function CustomSnackBar({ snack, setSnack }: any) {
       message={snack.message}
       ContentProps={{
         style: {
-          backgroundColor: snack.message.includes("Removed")
-            ? "orange"
-            : "green",
+          backgroundColor:
+            snack.message.includes("Removed") ||
+            snack.message.includes("Invalid")
+              ? "orange"
+              : "green",
         },
       }}
       key={vertical + horizontal}

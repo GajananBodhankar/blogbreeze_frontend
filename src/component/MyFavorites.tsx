@@ -149,7 +149,7 @@ function MyFavorites() {
           </Grid>
         ) : (
           <>
-            {favorites.map((blog: any, index: number) => {
+            {favorites?.map((blog: any, index: number) => {
               return (
                 index < 9 && (
                   <Grid item sm={6}>
@@ -163,6 +163,8 @@ function MyFavorites() {
           </>
         )}
       </Grid>
+      <Sidebar isFixed={true} />
+
       <Footer />
     </Box>
   );

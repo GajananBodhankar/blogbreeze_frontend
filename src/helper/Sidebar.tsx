@@ -65,17 +65,34 @@ function Sidebar({ isFixed }: any) {
         sx={{ position: "absolute", right: 0, top: 10 }}
         onClick={() => handleSidebarColor(mode)}
       />
-      <Box>
+      <Box
+        onClick={() => {
+          navigate("/blogs", { replace: true });
+        }}
+        sx={{
+          opacity: path?.includes("blogs") ? "50%" : "100%",
+        }}
+      >
         <p>Blogs</p>
         <img src={BlogIcon} alt="" width={"20%"} height={"max-content"} />
       </Box>
       <hr />
-      <Box>
+      <Box
+        onClick={() => navigate("/posts", { replace: true })}
+        sx={{
+          opacity: path?.includes("posts") ? "50%" : "100%",
+        }}
+      >
         <p>My Posts</p>
         <img src={Posts} alt="" width={"20%"} height={"max-content"} />
       </Box>
       <hr />
-      <Box>
+      <Box
+        onClick={() => navigate("/favorites", { replace: true })}
+        sx={{
+          opacity: path?.includes("favorites") ? "50%" : "100%",
+        }}
+      >
         <p>Favorites</p>
         <img src={Favorites} alt="" width={"20%"} height={"max-content"} />
       </Box>

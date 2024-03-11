@@ -42,7 +42,7 @@ function Navbar() {
       className={mode == "light" ? "navbar navbarLight" : "navbar navbarDark"}
     >
       <Typography style={{ display: "flex", gap: 10 }}>
-        {window.location.href.includes("blogs") && matches && (
+        {localStorage.getItem("user") && matches && (
           <Menu
             sx={{ alignSelf: "center" }}
             onClick={() => {

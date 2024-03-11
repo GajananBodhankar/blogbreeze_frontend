@@ -28,7 +28,7 @@ import {
   ThumbUp,
   ThumbUpAltOutlined,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { MainContext } from "./context";
 function MyPosts() {
@@ -46,6 +46,7 @@ function MyPosts() {
     }
     getAllPosts();
   }, []);
+  const navigate = useNavigate();
   return (
     <Box className="mainContainer">
       <Navbar />
@@ -152,6 +153,7 @@ function MyPosts() {
                 backgroundColor: mode == "light" ? "" : "orange",
               }}
               variant="contained"
+              onClick={() => navigate("/upload")}
             >
               <CloudUploadIcon />
               <Typography variant="body1" style={{ marginLeft: 10 }}>
@@ -166,7 +168,7 @@ function MyPosts() {
           </Grid>
         ) : (
           <>
-            {myPosts.map((blog: any, index: number) => {
+            {myPosts?.map((blog: any, index: number) => {
               return (
                 index < 9 && (
                   <Grid item sm={6}>
@@ -180,6 +182,8 @@ function MyPosts() {
           </>
         )}
       </Grid>
+      <Sidebar isFixed={true} />
+
       <Footer />
     </Box>
   );

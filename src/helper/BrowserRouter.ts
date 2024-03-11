@@ -6,6 +6,7 @@ import Register from "../component/Register.tsx";
 import Home from "../component/Home.tsx";
 import Login from "../component/Login.tsx";
 import View from "../component/View.tsx";
+import Upload from "../component/Upload.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const Router = createBrowserRouter([
   {
     path: "/view",
     Component: View,
+  },
+  {
+    path: "/upload",
+    Component: Upload,
   },
 ]);
 export default Router;
