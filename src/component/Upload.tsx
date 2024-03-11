@@ -64,9 +64,14 @@ function Upload() {
             flexDirection={"column"}
           >
             <Box>
-              <label htmlFor="customFile" className="lableImage" style={{
-                border: 
-              }}>
+              <label
+                htmlFor="customFile"
+                className="lableImage"
+                style={{
+                  border:
+                    mode == "dark" ? "1px solid white" : "1px solid black",
+                }}
+              >
                 Choose Image
               </label>
               <input
@@ -80,7 +85,7 @@ function Upload() {
               />
               <Typography
                 variant="body1"
-                color="initial"
+                color={mode == "dark" ? "white" : "black"}
                 maxWidth={"250px"}
                 style={{ marginTop: 10 }}
               >
@@ -93,6 +98,9 @@ function Upload() {
               sx={{ width: "70%" }}
             />
             <TextareaAutosize
+              style={{ color: mode == "dark" ? "white" : "black" }}
+              id="textArea"
+              className="textAreaLight"
               maxRows={20}
               minRows={20}
               placeholder="Content goes here..."

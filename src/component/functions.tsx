@@ -8,6 +8,7 @@ function modeChange(
 ) {
   let navbar = document.querySelector(".navbar");
   let footer = document.querySelector(".footer");
+  let textArea = document.querySelector("#textArea");
   let notchedLine = document.getElementsByClassName(
     "MuiOutlinedInput-notchedOutline"
   );
@@ -16,6 +17,8 @@ function modeChange(
     navbar?.classList.add("navbarDark");
     document.body.style.backgroundColor = "black";
     document.body.style.color = "white";
+    textArea?.classList.remove("textAreaLight");
+    textArea?.classList.add("textAreaDark");
     if (isScrollable) {
       footer?.classList.remove("footerRelativeLight");
       footer?.classList.add("footerRelativeDark");
@@ -26,13 +29,14 @@ function modeChange(
     Array.from(notchedLine)?.forEach((i) => {
       i?.classList.add("darkInput");
     });
-
     setMode("dark");
   } else {
     navbar?.classList.remove("navbarDark");
     document.body.style.backgroundColor = "white";
     document.body.style.color = "black";
     navbar?.classList.add("navbarLight");
+    textArea?.classList.add("textAreaLight");
+    textArea?.classList.remove("textAreaDark");
     if (isScrollable) {
       footer?.classList.add("footerRelativeLight");
       footer?.classList.remove("footerRelativeDark");

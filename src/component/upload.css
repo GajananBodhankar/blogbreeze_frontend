@@ -13,6 +13,24 @@ textarea {
   padding: 10px;
   border-radius: 4px;
 }
+.lableImage:hover {
+  cursor: pointer;
+}
+.textAreaDark:focus {
+  border: 1px solid white;
+}
+.textAreaLight:focus {
+  border: 1px solid black;
+}
+.textAreaDark::placeholder {
+  color: white;
+}
+.textAreaLight::placeholder {
+  color: gray;
+}
+textarea {
+  background-color: transparent;
+}
 input[type="file"] {
   display: none;
 }
