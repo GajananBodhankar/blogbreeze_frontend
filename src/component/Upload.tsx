@@ -85,7 +85,9 @@ function Upload() {
               />
               <Typography
                 variant="body1"
-                color={mode == "dark" ? "white" : "black"}
+                sx={{
+                  color: mode == "dark" ? "white" : "black",
+                }}
                 maxWidth={"250px"}
                 style={{ marginTop: 10 }}
               >
@@ -94,8 +96,9 @@ function Upload() {
             </Box>
             <TextField
               type="text"
+              id={mode == "light" ? "blogTitleWhite" : "blogTitleDark"}
+              className="blogTitle"
               placeholder="Title goes here.."
-              sx={{ width: "70%" }}
             />
             <TextareaAutosize
               style={{ color: mode == "dark" ? "white" : "black" }}

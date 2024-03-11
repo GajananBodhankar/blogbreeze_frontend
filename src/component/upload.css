@@ -30,6 +30,7 @@ textarea {
 }
 textarea {
   background-color: transparent;
+  border-radius: 4px;
 }
 input[type="file"] {
   display: none;
@@ -54,4 +55,13 @@ input[type="file"] {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+#blogTitleWhite {
+  color: black;
+}
+#blogTitleDark {
+  color: white;
+}
+.blogTitle {
+  width: 70%;
 }

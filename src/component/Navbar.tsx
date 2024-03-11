@@ -135,6 +135,7 @@ function Navbar() {
               setLoggedIn(false);
               setShowMenu(false);
               handleConfirmClose(confirmOpen, setConfirmOpen);
+              window.location.reload();
             }}
           >
             Logout

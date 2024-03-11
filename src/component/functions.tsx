@@ -9,6 +9,7 @@ function modeChange(
   let navbar = document.querySelector(".navbar");
   let footer = document.querySelector(".footer");
   let textArea = document.querySelector("#textArea");
+  let blogTitle = document.querySelector(".blogTitle");
   let notchedLine = document.getElementsByClassName(
     "MuiOutlinedInput-notchedOutline"
   );
