@@ -69,7 +69,14 @@ function MyPosts() {
           >
             {myPosts?.map((blog: any) => {
               return (
-                <Grid item md={3} sm={5} lg={4} className="blogItems">
+                <Grid
+                  item
+                  md={3}
+                  sm={5}
+                  lg={4}
+                  className="blogItems"
+                  key={blog._id}
+                >
                   <Card className="card">
                     <CardMedia
                       component="img"
@@ -169,7 +176,7 @@ function MyPosts() {
           >
             {myPosts?.map((blog: any) => {
               return (
-                <Grid item sm={5} xs={10}>
+                <Grid item sm={5} xs={10} key={blog._id}>
                   <Card className="card">
                     <CardMedia
                       component="img"

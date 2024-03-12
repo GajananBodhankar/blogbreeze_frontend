@@ -56,9 +56,7 @@ function MyFavorites() {
         )}
         {!media ? (
           <Grid
-            container
-            sm={9}
-            md={10}
+            className="gridContainer"
             gap={{ md: 4, sm: 5, lg: 4 }}
             padding={1}
             position={"relative"}
@@ -68,7 +66,14 @@ function MyFavorites() {
           >
             {favorites?.map((blog: any) => {
               return (
-                <Grid item md={3} sm={5} lg={4} className="blogItems">
+                <Grid
+                  item
+                  md={3}
+                  sm={5}
+                  lg={4}
+                  className="blogItems"
+                  key={blog._id}
+                >
                   <Card className="card">
                     <CardMedia
                       component="img"
@@ -131,7 +136,6 @@ function MyFavorites() {
                           }}
                         />
                       )}
-                      {/* <FavoriteBorderOutlined /> */}
                       <Link to={"/View"} state={blog}>
                         Read More
                       </Link>
@@ -140,31 +144,98 @@ function MyFavorites() {
                 </Grid>
               );
             })}
-
-            <Dialog open={contentLoader}>
-              <DialogTitle>
-                <CircularProgress />
-              </DialogTitle>
-            </Dialog>
           </Grid>
         ) : (
-          <>
-            {favorites?.map((blog: any, index: number) => {
+          <Grid
+            container
+            gap={4}
+            display={"flex"}
+            justifyContent={"center"}
+            marginY={10}
+            position={"relative"}
+          >
+            {favorites?.map((blog: any) => {
               return (
-                index < 9 && (
-                  <Grid item sm={6}>
-                    <img src={`${blog.image}`} width={"100%"} alt="" />
-                    <Typography>{blog.title}</Typography>
-                    <Typography>{blog.description}</Typography>
-                  </Grid>
-                )
+                <Grid item sm={5} xs={10} key={blog._id}>
+                  <Card className="card">
+                    <CardMedia
+                      component="img"
+                      className="cardMedia"
+                      image={blog.image}
+                      alt="Image not found"
+                    />
+                    <CardContent>
+                      <Typography style={{ fontSize: "x-large" }}>
+                        {blog.title.length > 40
+                          ? blog.title.slice(0, 40) + "..."
+                          : blog.title}
+                      </Typography>
+                      {blog._id}
+                    </CardContent>
+                    <CardActions>
+                      {blog.likedUsers.includes(
+                        localStorage.getItem("user")
+                      ) ? (
+                        <>
+                          <ThumbUp
+                            style={{ color: "#007fff" }}
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleFavoriteLikes(blog, setFavorites);
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      ) : (
+                        <>
+                          <ThumbUpAltOutlined
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleFavoriteLikes(blog, setFavorites);
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      )}
+                      {favorites
+                        ?.map((i: { _id: any }) => i._id)
+                        .includes(blog._id) ? (
+                        <Favorite
+                          style={{ color: "red" }}
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+                            setContentLoader(false);
+                          }}
+                        />
+                      ) : (
+                        <FavoriteBorder
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+                            setContentLoader(false);
+                          }}
+                        />
+                      )}
+                      <Link to={"/View"} state={blog}>
+                        Read More
+                      </Link>
+                    </CardActions>
+                  </Card>
+                </Grid>
               );
             })}
-          </>
+          </Grid>
         )}
       </Grid>
       <Sidebar isFixed={true} />
-
+      <Dialog open={contentLoader}>
+        <DialogTitle>
+          <CircularProgress />
+        </DialogTitle>
+      </Dialog>
       <Footer />
     </Box>
   );
