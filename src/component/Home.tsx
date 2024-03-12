@@ -11,9 +11,6 @@ function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const { mode } = MainContext();
   useEffect(() => {
-    
-  }, [mode]);
-  useEffect(() => {
     if (localStorage.getItem("user")) {
       setIsLoggedIn(true);
     } else {
