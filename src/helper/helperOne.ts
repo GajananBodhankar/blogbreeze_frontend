@@ -121,10 +121,26 @@ const reducerFunction = (state: any, action: { type: any; payload: any }) => {
       return state;
   }
 };
+function checkStringTitle(val: any, setMessage: (arg0: string) => void) {
+  if (!val.trim().match(/\s/g)?.length) {
+    setMessage("Title too short");
+  } else if (val.trim().match(/\s/g)?.length < 5) {
+    setMessage("Title too short");
+  } else if (val.trim().match(/\s/g)?.length > 10) {
+    setMessage("Title too long");
+  }
+  return (
+    val.trim().match(/\s/g)?.length >= 5 &&
+    val.trim().match(/\s/g)?.length <= 10
+  );
+}
 
-function CheckTitle(val: string) {
-  let r = /[a-zA-Z~!@#$%^&*():",.?]{5}/i;
-  if (r.test(val)) {
+function CheckTitle(
+  val: string,
+  setMessage: { (value: SetStateAction<string>): void; (arg0: string): void }
+) {
+  let r = /[a-zA-Z~!@#$%^&*():",.?]/i;
+  if (r.test(val) && checkStringTitle(val, setMessage)) {
     return true;
   }
   return false;
@@ -136,12 +152,12 @@ function handleTitle(
     (value: { type: any; payload: any }): void;
     (arg0: { type: string; payload: any }): void;
   },
-  value: string
+  value: string,
+  setMessage: { (value: SetStateAction<string>): void; (arg0: string): void }
 ) {
-  if (CheckTitle(value)) {
+  if (CheckTitle(value, setMessage)) {
     dispatch({ type: "title", payload: value });
-  } else {
-    
+    setMessage("");
   }
 }
 

@@ -65,8 +65,7 @@ function Blogs() {
         {!media ? (
           <Grid
             container
-            sm={9}
-            md={10}
+            className="gridContainer"
             gap={{ md: 4, sm: 5, lg: 4 }}
             padding={1}
             position={"relative"}
@@ -90,7 +89,6 @@ function Blogs() {
                           ? blog.title.slice(0, 40) + "..."
                           : blog.title}
                       </Typography>
-                      {blog._id}
                     </CardContent>
                     <CardActions>
                       {blog.likedUsers.includes(
