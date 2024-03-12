@@ -12,6 +12,7 @@ import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
+  handleContent,
   handleDeleteItem,
   handleFileChange,
   handleKeyDown,
@@ -29,7 +30,9 @@ function Upload() {
   const [name, setName] = useState("");
   const media = useMediaQuery("(max-width:768px)");
   const { mode } = MainContext();
+  const [linkFocus, setLinkFocus] = useState<boolean>(false);
   const [titleMessage, setTitleMessage] = useState("");
+  const [contentMessage, setContentMessage] = useState("");
   const [state, dispatch] = useReducer(reducerFunction, initialState);
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   return (
@@ -104,16 +107,40 @@ function Upload() {
               {titleMessage}
             </Typography>
           </Box>
-          <TextareaAutosize
-            style={{ color: mode == "dark" ? "white" : "black" }}
-            id="textArea"
-            className="textAreaLight"
-            maxRows={20}
-            minRows={20}
-            placeholder="Content goes here..."
-          />
+          <Box>
+            <TextareaAutosize
+              style={{ color: mode == "dark" ? "white" : "black" }}
+              id="textArea"
+              className={mode == "light" ? "textAreaLight" : "textAreaDark"}
+              maxRows={20}
+              minRows={20}
+              placeholder="Content goes here..."
+              onChange={(e) =>
+                handleContent(
+                  state,
+                  dispatch,
+                  e.target.value,
+                  setContentMessage
+                )
+              }
+              onBlur={() => setContentMessage("")}
+            />{" "}
+            <Typography
+              variant="body1"
+              color={mode == "light" ? "black" : "white"}
+            >
+              {contentMessage}
+            </Typography>
+          </Box>
           <Box className={"parentBoxList"}>
-            <label htmlFor="val">Enter links and press enter</label>
+            <label htmlFor="val">
+              Enter links and press enter : {" "}
+              <span style={{ color: "red" }}>
+                {data?.length < 2 && linkFocus
+                  ? "At least two links required *"
+                  : ""}
+              </span>
+            </label>
             <TextField
               name="val"
               type="text"
@@ -121,6 +148,8 @@ function Upload() {
               placeholder="Related Links goes here..."
               id={mode == "light" ? "relatedLinksLight" : "relatedLinksDark"}
               value={val}
+              onFocus={() => setLinkFocus(true)}
+              onBlur={() => setLinkFocus(false)}
               onChange={(e) => setVal(e.target.value)}
               onKeyDown={(e) => handleKeyDown(e, data, val, setData, setVal)}
             />

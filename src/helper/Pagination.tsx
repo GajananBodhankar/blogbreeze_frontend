@@ -11,7 +11,7 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
       position={"absolute"}
       gap={5}
       sx={{
-        bottom: -50,
+        bottom: -70,
         left: "50%",
         transform: "translateX(-50%)",
       }}
@@ -29,7 +29,7 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
                   style={{
                     color: "#ee6c02",
                     outlineColor: "#ee6c02",
-                    border: "1px solid #ee6c02",
+                    border: "2px solid #ee6c02",
                     opacity: "50%",
                   }}
                 >
@@ -38,6 +38,9 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
                 <Button
                   color="warning"
                   variant="outlined"
+                  style={{
+                    border: "2px solid #ee6c02",
+                  }}
                   onClick={async () => {
                     setLoading(true);
                     setPage(page + 1);
@@ -58,7 +61,7 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
                 style={{
                   color: "#ee6c02",
                   outlineColor: "#ee6c02",
-                  border: "1px solid #ee6c02",
+                  border: "2px solid #ee6c02",
                 }}
                 onClick={async () => {
                   setLoading(true);
@@ -74,7 +77,7 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
                 style={{
                   color: "#ee6c02",
                   outlineColor: "#ee6c02",
-                  border: "1px solid #ee6c02",
+                  border: "2px solid #ee6c02",
                   opacity: "50%",
                 }}
                 onClick={async () => {
@@ -100,7 +103,7 @@ function Pagination({ allBlogs, page, setPage, setAllBlogs }: any) {
                 style={{
                   color: "#ee6c02",
                   outlineColor: "#ee6c02",
-                  border: "1px solid #ee6c02",
+                  border: "2px solid #ee6c02",
                 }}
                 onClick={async () => {
                   setLoading(true);

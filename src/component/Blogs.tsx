@@ -158,7 +158,6 @@ function Blogs() {
                           }}
                         />
                       )}
-                      {/* <FavoriteBorderOutlined /> */}
                       <Link to={{ pathname: "/view" }} state={blog}>
                         Read More
                       </Link>
@@ -173,31 +172,125 @@ function Blogs() {
               setAllBlogs={setAllBlogs}
               setPage={setPage}
             />
-            <Dialog open={contentLoader}>
-              <DialogTitle>
-                <CircularProgress />
-              </DialogTitle>
-            </Dialog>
           </Grid>
         ) : (
-          <>
-            {allBlogs?.data.map((blog: any, index: number) => {
+          <Grid
+            container
+            gap={4}
+            display={"flex"}
+            justifyContent={"center"}
+            marginY={10}
+            position={"relative"}
+          >
+            {allBlogs?.data.map((blog: any) => {
               return (
-                index < 9 && (
-                  <Grid item sm={6}>
-                    <img src={`${blog.image}`} width={"100%"} alt="" />
-                    <Typography>{blog.title}</Typography>
-                    <Typography>{blog.description}</Typography>
-                  </Grid>
-                )
+                <Grid item sm={5} xs={10}>
+                  <Card className="card">
+                    <CardMedia
+                      component="img"
+                      className="cardMedia"
+                      image={blog.image}
+                      alt="Image not found"
+                    />
+                    <CardContent>
+                      <Typography style={{ fontSize: "x-large" }}>
+                        {blog.title.length > 40
+                          ? blog.title.slice(0, 40) + "..."
+                          : blog.title}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      {blog.likedUsers.includes(
+                        localStorage.getItem("user")
+                      ) ? (
+                        <>
+                          <ThumbUp
+                            style={{ color: "#007fff" }}
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleLikes(
+                                blog,
+                                allBlogs,
+                                setAllBlogs,
+                                page
+                              );
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      ) : (
+                        <>
+                          <ThumbUpAltOutlined
+                            onClick={async () => {
+                              setContentLoader(true);
+                              await handleLikes(
+                                blog,
+                                allBlogs,
+                                setAllBlogs,
+                                page
+                              );
+                              setContentLoader(false);
+                            }}
+                          />
+                          <p>{blog.likes}</p>
+                        </>
+                      )}
+                      {favorites
+                        ?.map((i: { _id: any }) => i._id)
+                        .includes(blog._id) ? (
+                        <Favorite
+                          style={{ color: "red" }}
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+                            setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Removed from favorites",
+                            });
+                          }}
+                        />
+                      ) : (
+                        <FavoriteBorder
+                          onClick={async () => {
+                            setContentLoader(true);
+                            await handleAddFavorite(blog, setFavorites);
+
+                            setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Added to favorites",
+                            });
+                          }}
+                        />
+                      )}
+                      <Link to={{ pathname: "/view" }} state={blog}>
+                        Read More
+                      </Link>
+                    </CardActions>
+                  </Card>
+                </Grid>
               );
             })}
-          </>
+            <Pagination
+              allBlogs={allBlogs}
+              page={page}
+              setAllBlogs={setAllBlogs}
+              setPage={setPage}
+            />
+          </Grid>
         )}
       </Grid>
       <Sidebar isFixed={true} />
       <CustomSnackBar snack={snack} setSnack={setSnack} />
-
+      <Dialog open={contentLoader}>
+        <DialogTitle>
+          <CircularProgress />
+        </DialogTitle>
+      </Dialog>
       <Footer />
     </Box>
   );

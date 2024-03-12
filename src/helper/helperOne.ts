@@ -147,7 +147,7 @@ function CheckTitle(
 }
 
 function handleTitle(
-  state: any,
+  _state: any,
   dispatch: {
     (value: { type: any; payload: any }): void;
     (arg0: { type: string; payload: any }): void;
@@ -161,6 +161,23 @@ function handleTitle(
   }
 }
 
+function handleContent(
+  _state: any,
+  dispatch: {
+    (value: { type: any; payload: any }): void;
+    (arg0: { type: string; payload: any }): void;
+  },
+  value: any,
+  setMessage: { (value: SetStateAction<string>): void; (arg0: string): void }
+) {
+  if (value.match(/\s/g)?.length < 100) {
+    setMessage("Content too short, it must have minimum 100 words");
+  } else {
+    setMessage("");
+    dispatch({ type: "content", payload: value });
+  }
+}
+
 export {
   reducerFunction,
   initialState,
@@ -171,4 +188,5 @@ export {
   handleFileChange,
   handleDeleteItem,
   handleTitle,
+  handleContent,
 };
