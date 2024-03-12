@@ -246,6 +246,21 @@ function MyPosts() {
                 </Grid>
               );
             })}
+            <Button
+              style={{
+                position: "fixed",
+                display: "flex",
+                alignContent: "center",
+                right: 30,
+                bottom: 30,
+                zIndex: 1,
+                backgroundColor: mode == "light" ? "" : "orange",
+              }}
+              variant="contained"
+              onClick={() => navigate("/upload")}
+            >
+              <CloudUploadIcon />
+            </Button>
           </Grid>
         )}
       </Grid>
