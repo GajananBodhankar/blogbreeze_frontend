@@ -31,12 +31,15 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { MainContext } from "./context";
+import CustomSnackBar from "../helper/CustomSnackBar";
 function MyPosts() {
   const media = useMediaQuery("(max-width:768px)");
   const [myPosts, setMyPosts] = useState<any>();
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const { mode } = MainContext();
+  const [snack, setSnack] = useState({ open: false, message: "", color: "" });
+
   useEffect(() => {
     async function getAllPosts() {
       setContentLoader(true);
@@ -77,7 +80,7 @@ function MyPosts() {
                   className="blogItems"
                   key={blog._id}
                 >
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -127,6 +130,11 @@ function MyPosts() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Removed from favorites",
+                            });
                           }}
                         />
                       ) : (
@@ -135,10 +143,22 @@ function MyPosts() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Added to favorites",
+                            });
                           }}
                         />
                       )}
-                      <Link to={"/View"} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={"readMore"}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>
@@ -177,7 +197,7 @@ function MyPosts() {
             {myPosts?.map((blog: any) => {
               return (
                 <Grid item sm={5} xs={10} key={blog._id}>
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -227,6 +247,11 @@ function MyPosts() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Removed from favorites",
+                            });
                           }}
                         />
                       ) : (
@@ -235,10 +260,22 @@ function MyPosts() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Added to favorites",
+                            });
                           }}
                         />
                       )}
-                      <Link to={"/View"} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={"readMore"}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>
@@ -265,6 +302,7 @@ function MyPosts() {
         )}
       </Grid>
       <Sidebar isFixed={true} />
+      <CustomSnackBar snack={snack} setSnack={setSnack} />
       <Dialog open={contentLoader}>
         <DialogTitle>
           <CircularProgress />

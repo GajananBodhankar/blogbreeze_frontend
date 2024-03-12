@@ -32,6 +32,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../helper/Pagination";
 import CustomSnackBar from "../helper/CustomSnackBar";
+import { MainContext } from "./context";
 function Blogs() {
   const [allBlogs, setAllBlogs] = useState<any>();
   const media = useMediaQuery("(max-width:768px)");
@@ -40,7 +41,7 @@ function Blogs() {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState<any>();
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
-
+  const { mode } = MainContext();
   useEffect(() => {
     async function callGetAllBlogs() {
       setContentLoader(true);
@@ -83,7 +84,7 @@ function Blogs() {
                   className="blogItems"
                   key={blog._id}
                 >
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -165,7 +166,14 @@ function Blogs() {
                           }}
                         />
                       )}
-                      <Link to={{ pathname: "/view" }} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={'readMore'}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>
@@ -192,7 +200,7 @@ function Blogs() {
             {allBlogs?.data.map((blog: any) => {
               return (
                 <Grid item sm={5} xs={10} key={blog._id}>
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : ""}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -274,7 +282,14 @@ function Blogs() {
                           }}
                         />
                       )}
-                      <Link to={{ pathname: "/view" }} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={'readMore'}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>

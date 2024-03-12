@@ -56,12 +56,13 @@ function View() {
             <Sidebar isFixed={false} />
           </Grid>
         )}
-        <Grid item md={9} sx={{ flexBasis: !media ? "70%" : "" }}>
+        <Grid item md={9} sx={{ flexBasis: !media ? "70%" : "", padding: 5 }}>
           {Object.keys(state).length && (
             <Card
               style={{
                 backgroundColor: mode == "dark" ? "black" : "",
                 color: mode == "dark" ? "white" : "",
+                border: mode == "dark" ? "1px solid white" : "1px solid black",
               }}
             >
               <CardMedia

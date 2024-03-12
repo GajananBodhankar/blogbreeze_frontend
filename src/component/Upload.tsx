@@ -134,7 +134,7 @@ function Upload() {
           </Box>
           <Box className={"parentBoxList"}>
             <label htmlFor="val">
-              Enter links and press enter : {" "}
+              Enter links and press enter :{" "}
               <span style={{ color: "red" }}>
                 {data?.length < 2 && linkFocus
                   ? "At least two links required *"
@@ -172,11 +172,13 @@ function Upload() {
           </Box>
           <Button
             variant="contained"
-            sx={{ width: "max-content", alignSelf: "center" }}
-            color={mode == "dark" ? "warning" : "primary"}
+            sx={{
+              width: "max-content",
+              backgroundColor: mode == "dark" ? "orange" : "",
+            }}
             onClick={() => {}}
           >
-            Submit
+            POST
           </Button>
         </Grid>
       </Grid>

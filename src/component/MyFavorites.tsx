@@ -27,13 +27,15 @@ import {
   ThumbUp,
   ThumbUpAltOutlined,
 } from "@mui/icons-material";
+import { MainContext } from "./context";
 
 function MyFavorites() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const navigate = useNavigate();
-
+  const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const media = useMediaQuery("(max-width:768px)");
+  const { mode } = MainContext();
   useEffect(() => {
     async function callGetAllFavorites() {
       setContentLoader(true);
@@ -74,7 +76,7 @@ function MyFavorites() {
                   className="blogItems"
                   key={blog._id}
                 >
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -125,6 +127,11 @@ function MyFavorites() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Removed from favorites",
+                            });
                           }}
                         />
                       ) : (
@@ -133,10 +140,22 @@ function MyFavorites() {
                             setContentLoader(true);
                             await handleAddFavorite(blog, setFavorites);
                             setContentLoader(false);
+                            setSnack({
+                              ...snack,
+                              open: true,
+                              message: "Added to favorites",
+                            });
                           }}
                         />
                       )}
-                      <Link to={"/View"} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={"readMore"}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>
@@ -157,7 +176,7 @@ function MyFavorites() {
             {favorites?.map((blog: any) => {
               return (
                 <Grid item sm={5} xs={10} key={blog._id}>
-                  <Card className="card">
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
@@ -219,7 +238,14 @@ function MyFavorites() {
                           }}
                         />
                       )}
-                      <Link to={"/View"} state={blog}>
+                      <Link
+                        to={{ pathname: "/view" }}
+                        style={{
+                          color: mode == "light" ? "blue" : "orange",
+                        }}
+                        className={"readMore"}
+                        state={blog}
+                      >
                         Read More
                       </Link>
                     </CardActions>

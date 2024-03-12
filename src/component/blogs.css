@@ -103,10 +103,21 @@
   height: 200px;
   width: 100%;
 }
-.card {
+.cardDark {
+  border: 1px solid white;
+  color: white;
+  background-color: black;
+  height: 350px;
+  justify-content: space-between;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.cardLight {
   border: 1px solid black;
-  background-color: white;
   color: black;
+  background-color: white;
   height: 350px;
   justify-content: space-between;
   display: flex;
@@ -123,7 +134,10 @@
   .cardMedia {
     object-fit: fill;
   }
-  .card {
+  .cardLight {
+    height: 350px;
+  }
+  .cardDark {
     height: 350px;
   }
 }
@@ -139,9 +153,14 @@
     width: 80%;
   }
 }
-@media screen and  (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .gridContainer {
     width: 70%;
   }
 }
-
+.readMore {
+  text-decoration: none;
+}
+.readMore:hover {
+  text-decoration: underline;
+}
