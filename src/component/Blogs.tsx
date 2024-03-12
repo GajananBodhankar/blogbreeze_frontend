@@ -200,7 +200,7 @@ function Blogs() {
             {allBlogs?.data.map((blog: any) => {
               return (
                 <Grid item sm={5} xs={10} key={blog._id}>
-                  <Card className={mode == "light" ? "cardLight" : ""}>
+                  <Card className={mode == "light" ? "cardLight" : "cardDark"}>
                     <CardMedia
                       component="img"
                       className="cardMedia"
