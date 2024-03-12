@@ -164,6 +164,7 @@ function View() {
         </Grid>
         <CustomSnackBar snack={snack} setSnack={setSnack} />
       </Grid>
+      <Sidebar isFixed={true} />
     </Box>
   );
 }
