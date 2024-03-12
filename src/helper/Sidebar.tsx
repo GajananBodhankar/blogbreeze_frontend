@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { handleSidebarColor } from "./helperOne.ts";
 import { MainContext } from "../component/context.tsx";
 import { CloseOutlined } from "@mui/icons-material";
@@ -62,8 +62,8 @@ function Sidebar({ isFixed }: any) {
       }
     >
       <CloseOutlined
-        sx={{ position: "absolute", right: 0, top: 10 }}
         onClick={() => handleSidebarColor(mode)}
+        sx={{ position: "absolute", right: 0, top: 10, zIndex: 10 }}
       />
       <Box
         onClick={() => {
