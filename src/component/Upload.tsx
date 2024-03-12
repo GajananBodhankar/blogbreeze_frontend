@@ -1,10 +1,7 @@
 import {
-  Autocomplete,
-  AutocompleteRenderInputParams,
   Box,
   Button,
   Grid,
-  Select,
   TextField,
   TextareaAutosize,
   useMediaQuery,
@@ -15,15 +12,15 @@ import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
-  checkFileImage,
   handleDeleteItem,
   handleFileChange,
   handleKeyDown,
+  handleTitle,
   initialState,
   reducerFunction,
 } from "../helper/helperOne";
-import { ReactNode, useReducer, useState } from "react";
-import { Clear, RemoveCircle } from "@mui/icons-material";
+import { useReducer, useState } from "react";
+import { Clear } from "@mui/icons-material";
 import { MainContext } from "./context";
 import CustomSnackBar from "../helper/CustomSnackBar";
 function Upload() {
@@ -99,6 +96,7 @@ function Upload() {
               id={mode == "light" ? "blogTitleWhite" : "blogTitleDark"}
               className="blogTitle"
               placeholder="Title goes here.."
+              onChange={(e) => handleTitle(state, dispatch, e.target.value)}
             />
             <TextareaAutosize
               style={{ color: mode == "dark" ? "white" : "black" }}
@@ -143,6 +141,7 @@ function Upload() {
               variant="contained"
               sx={{ width: "max-content", alignSelf: "center" }}
               color={mode == "dark" ? "warning" : "primary"}
+              onClick={() => {}}
             >
               Submit
             </Button>

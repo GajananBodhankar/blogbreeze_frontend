@@ -122,6 +122,29 @@ const reducerFunction = (state: any, action: { type: any; payload: any }) => {
   }
 };
 
+function CheckTitle(val: string) {
+  let r = /[a-zA-Z~!@#$%^&*():",.?]{5}/i;
+  if (r.test(val)) {
+    return true;
+  }
+  return false;
+}
+
+function handleTitle(
+  state: any,
+  dispatch: {
+    (value: { type: any; payload: any }): void;
+    (arg0: { type: string; payload: any }): void;
+  },
+  value: string
+) {
+  if (CheckTitle(value)) {
+    dispatch({ type: "title", payload: value });
+  } else {
+    
+  }
+}
+
 export {
   reducerFunction,
   initialState,
@@ -131,4 +154,5 @@ export {
   handleKeyDown,
   handleFileChange,
   handleDeleteItem,
+  handleTitle,
 };

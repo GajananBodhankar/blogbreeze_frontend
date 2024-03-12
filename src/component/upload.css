@@ -80,17 +80,27 @@ input[type="file"] {
 }
 #blogTitleWhite {
   color: black;
+  border: 0.5px solid black;
+  border-radius: 4px;
 }
 #blogTitleDark {
   color: white;
+  border: 0.5px solid white;
+  border-radius: 4px;
 }
 .blogTitle {
   width: 70%;
 }
 
 #relatedLinksLight {
+  border-radius: 4px;
+
   color: black;
+  border: 0.5px solid black;
 }
 #relatedLinksDark {
+  border-radius: 4px;
+
   color: white;
+  border: 0.5px solid white;
 }
