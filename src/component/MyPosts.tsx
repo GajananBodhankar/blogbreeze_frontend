@@ -53,7 +53,7 @@ function MyPosts() {
   const navigate = useNavigate();
   return (
     <Box className="mainContainer">
-           <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} />
 
       <Grid container>
         {!media && (
@@ -72,6 +72,14 @@ function MyPosts() {
             display={"flex"}
             justifyContent={"center"}
           >
+            {myPosts?.length == 0 && (
+              <Typography
+                variant="h4"
+                color={mode == "dark" ? "orange" : "initial"}
+              >
+                No Posts found 🙁...
+              </Typography>
+            )}
             {myPosts?.map((blog: any) => {
               return (
                 <Grid

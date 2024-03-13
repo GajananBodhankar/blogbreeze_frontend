@@ -12,7 +12,6 @@ import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
-  handleBlogPost,
   handleContent,
   handleDeleteItem,
   handleFileChange,
@@ -167,7 +166,9 @@ function Upload() {
               >
                 {data?.map((item: any, index: number) => (
                   <p>
-                    {item}{" "}
+                    {item.length < 20
+                      ? `${item}`
+                      : `${item.substring(0, 20)}...`}
                     <Clear
                       fontSize="small"
                       style={{ marginLeft: 10 }}
@@ -182,12 +183,14 @@ function Upload() {
           </Box>
           <Button
             variant="contained"
-            sx={{
+            style={{
               width: "max-content",
-              backgroundColor: mode == "dark" ? "orange" : "",
+              backgroundColor: mode == "dark" ? "orange" : "#1976d2",
               padding: "5px 30px",
             }}
-            onClick={() => PostBlog(state, dispatch, snack, setSnack, setData,setName)}
+            onClick={() =>
+              PostBlog(state, dispatch, snack, setSnack, setData, setName)
+            }
           >
             POST
           </Button>

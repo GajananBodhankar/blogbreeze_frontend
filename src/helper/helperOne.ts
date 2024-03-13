@@ -1,5 +1,4 @@
 import { SetStateAction } from "react";
-import { PostBlog } from "../api/apicalls";
 
 function handleSidebarColor(mode: string) {
   let doc = document.querySelector(".sidebar");
@@ -178,17 +177,103 @@ function handleContent(
   _state: any,
   dispatch: {
     (value: { type: any; payload: any }): void;
-    (arg0: { type: string; payload: any }): void;
+    (arg0: { type: any; payload: any }): void;
   },
   value: any,
   setMessage: { (value: SetStateAction<string>): void; (arg0: string): void }
 ) {
+  dispatch({ type: "content", payload: value });
   if (value.match(/\s/g)?.length < 100) {
     setMessage("Content too short, it must have minimum 100 words");
   } else {
     setMessage("");
-    dispatch({ type: "content", payload: value });
   }
+}
+
+function checkBlogPostData(
+  state: {
+    image: any;
+    title: {
+      trim: () => {
+        (): any;
+        new (): any;
+        match: {
+          (arg0: RegExp): { (): any; new (): any; length: number };
+          new (): any;
+        };
+      };
+    };
+    content: {
+      match: (arg0: RegExp) => { (): any; new (): any; length: number };
+    };
+    related_links: string;
+  },
+  snack: { open: boolean; message: string; color: string },
+  setSnack: {
+    (
+      value: SetStateAction<{ open: boolean; message: string; color: string }>
+    ): void;
+    (arg0: any): void;
+    (arg0: any): void;
+  }
+) {
+  if (
+    !state.image &&
+    !state.title &&
+    !state.content &&
+    state.related_links.length == 0
+  ) {
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please fill all the fields",
+    });
+    return false;
+  }
+  if (!state.image) {
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please select an image",
+    });
+    return false;
+  }
+  if (
+    !(
+      state.title.trim().match(/\s/g)?.length >= 5 &&
+      state.title.trim().match(/\s/g)?.length <= 10
+    )
+  ) {
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please enter title between 5 and 10 characters",
+    });
+    return false;
+  }
+  if (state.content.match(/\s/g)?.length < 100 || !state.content) {
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please enter content more than 100 words",
+    });
+    return false;
+  }
+  if (typeof state.related_links === "string") {
+    if (JSON.parse(state.related_links).length < 2)
+      setSnack({
+        ...snack,
+        open: true,
+        message: "Please add at least 2 related links",
+      });
+  } else if ([...state.related_links].length < 2) {
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please add at least 2 related links",
+    });
+  }
+  return true;
 }
 
 export {
@@ -202,4 +287,5 @@ export {
   handleDeleteItem,
   handleTitle,
   handleContent,
+  checkBlogPostData,
 };

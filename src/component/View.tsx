@@ -75,29 +75,32 @@ function View() {
                 image={data?.image}
                 alt="Image not found"
               />
-              <CardContent>
+              <CardContent
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  paddingTop: 30,
+                }}
+              >
                 <Typography style={{ fontSize: "x-large" }}>
                   {data?.title?.length > 40
                     ? data?.title.slice(0, 40) + "..."
                     : data?.title}
                 </Typography>
-                {data?._id}
-                <p>
-                  {data?.content}
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Cupiditate distinctio eum voluptatum corrupti nesciunt
-                  voluptate autem eaque, eius odio officia? Suscipit nulla optio
-                  molestias quasi velit quis fugit illo, ut temporibus ipsam
-                  dolores error repellat, accusamus ullam, voluptates deleniti
-                  iusto culpa eum. Modi velit illum aliquam eveniet dolor magni
-                  tempore saepe perspiciatis, explicabo ipsam cupiditate fugit!
-                  Perferendis voluptas iusto nemo amet inventore soluta eius
-                  voluptatem et nulla ad incidunt enim, harum numquam. Commodi
-                  fugit vel rerum doloribus repudiandae distinctio cumque maxime
-                  voluptate, aperiam, sunt mollitia nesciunt itaque aut corporis
-                  dolores, nemo doloremque perferendis alias soluta iusto
-                  deleniti ad expedita culpa.
-                </p>
+                <Typography variant="body1">{data?.content}</Typography>
+                {data?.related_links.map((item: any, index: number) => (
+                  <a
+                    href={item}
+                    style={{
+                      display: "block",
+                      color: mode == "dark" ? "orange" : "blue",
+                    }}
+                    target="_blank"
+                  >
+                    Link -{index + 1}
+                  </a>
+                ))}
               </CardContent>
               <CardActions>
                 {data?.likedUsers.includes(localStorage.getItem("user")) ? (

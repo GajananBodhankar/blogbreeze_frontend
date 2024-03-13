@@ -33,7 +33,7 @@ function MyFavorites() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const navigate = useNavigate();
-  const [user, setUser] = useState<string>(""); 
+  const [user, setUser] = useState<string>("");
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const media = useMediaQuery("(max-width:768px)");
   const { mode } = MainContext();
@@ -50,7 +50,7 @@ function MyFavorites() {
   }, []);
   return (
     <Box className="mainContainer">
-           <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} />
 
       <Grid container>
         {!media && (
@@ -68,6 +68,14 @@ function MyFavorites() {
             display={"flex"}
             justifyContent={"center"}
           >
+            {favorites?.length == 0 && (
+              <Typography
+                variant="h4"
+                color={mode == "dark" ? "orange" : "initial"}
+              >
+                No blogs added to favorite 🙁...
+              </Typography>
+            )}
             {favorites?.map((blog: any) => {
               return (
                 <Grid

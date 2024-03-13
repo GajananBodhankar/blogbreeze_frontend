@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { SetStateAction } from "react";
 import { apiEndPoint } from "../config.ts";
+import { checkBlogPostData } from "../helper/helperOne.ts";
 
 async function loginApiCall(
   email: string,
@@ -201,30 +202,40 @@ async function handleViewLikes(
 
 async function PostBlog(
   state: any,
-  dispatch,
-  snack,
-  setSnack,
-  setData,
-  setName
+  dispatch: {
+    (value: { type: any; payload: any }): void;
+    (arg0: { type: any; payload: any }): void;
+  },
+  snack: { open: boolean; message: string; color: string },
+  setSnack: {
+    (
+      value: SetStateAction<{ open: boolean; message: string; color: string }>
+    ): void;
+    (arg0: any): void;
+  },
+  setData: { (value: any): void; (arg0: never[]): void },
+  setName: { (value: SetStateAction<string>): void; (arg0: string): void }
 ) {
-  try {
-    let response = await axios.post(
-      `${apiEndPoint}/blogs/${localStorage.getItem("user")}`,
-      state
-    );
-    if (response.data?.success) {
-      setSnack({ ...snack, open: true, message: "Blog posted successfully" });
-      dispatch({ type: "reset" });
-      setData([]);
-      setName("");
-      return true;
-    } else {
-      setSnack({ ...snack, open: true, message: "Blog not posted" });
-      return false;
+  if (checkBlogPostData(state, snack, setSnack)) {
+    try {
+      let response = await axios.post(
+        `${apiEndPoint}/blogs/${localStorage.getItem("user")}`,
+        state
+      );
+      if (response.data?.success) {
+        setSnack({ ...snack, open: true, message: "Blog posted successfully" });
+        dispatch({ type: "reset", payload: "" });
+        setData([]);
+        setName("");
+        return true;
+      } else {
+        setSnack({ ...snack, open: true, message: "Blog not posted" });
+        return false;
+      }
+    } catch (e) {
+      alert(`${e}`);
+      return e;
     }
-  } catch (e) {
-    alert(`${e}`);
-    return e;
   }
 }
 

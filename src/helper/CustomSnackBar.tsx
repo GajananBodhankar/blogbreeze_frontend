@@ -30,7 +30,8 @@ function CustomSnackBar({ snack, setSnack }: any) {
         style: {
           backgroundColor:
             snack.message.includes("Removed") ||
-            snack.message.includes("Invalid")
+            snack.message.includes("Invalid") ||
+            snack.message.includes("Please")
               ? "orange"
               : "green",
         },
