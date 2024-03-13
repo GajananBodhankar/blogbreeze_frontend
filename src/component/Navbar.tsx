@@ -35,7 +35,6 @@ function Navbar({ user, setUser }: any) {
       setLoggedIn(false);
       setUser("");
     }
-    console.log("navbar rendered");
   }, [localStorage.getItem("user")]);
   return (
     <Grid

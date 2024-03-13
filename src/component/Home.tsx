@@ -12,7 +12,6 @@ function Home() {
   const [user, setUser] = useState<any>("");
   const { mode } = MainContext();
   useEffect(() => {
-    console.log("home rerenderedc");
     if (localStorage.getItem("user")) {
       setIsLoggedIn(true);
     } else {
