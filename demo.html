@@ -3,31 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Choose File Button</title>
+    <title>Document</title>
     <style>
-      /* Hide the default text */
-      input[type="file"] {
-        display: none;
+      .underline {
+        position: relative;
+        display: inline;
       }
-
-      /* Style the button to look like your choose file button */
-      .custom-file-upload {
-        border: 1px solid #ccc;
-        display: inline-block;
-        padding: 6px 12px;
-        cursor: pointer;
+      .underline::after {
+        content: "";
+        bottom: 0;
+        left: 0;
+        height: 5px;
+        width: 100%;
+        background-color: red;
+        position: absolute;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 100ms ease-in-out;
+      }
+      .underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
       }
     </style>
   </head>
   <body>
-    <!-- Label for the custom file input -->
-    <label for="file-upload" class="custom-file-upload"> Choose File </label>
-
-    <!-- Actual file input, hidden -->
-    <input type="file" id="file-upload" />
-    <label for="male">Male</label>
-    <input type="radio" name="gender" id="male" />
-    <label for="female">Female</label>
-    <input type="radio" name="gender" id="female" />
+    <p class="underline">Gajanan</p>
   </body>
 </html>

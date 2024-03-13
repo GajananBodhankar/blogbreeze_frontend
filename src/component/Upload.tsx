@@ -12,6 +12,7 @@ import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
+  handleBlogPost,
   handleContent,
   handleDeleteItem,
   handleFileChange,
@@ -24,6 +25,7 @@ import { useReducer, useState } from "react";
 import { Clear } from "@mui/icons-material";
 import { MainContext } from "./context";
 import CustomSnackBar from "../helper/CustomSnackBar";
+import { PostBlog } from "../api/apicalls";
 function Upload() {
   const [data, setData] = useState<any>([]);
   const [val, setVal] = useState("");
@@ -38,7 +40,7 @@ function Upload() {
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   return (
     <Box className="mainContainer">
-           <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} />
 
       <Grid container>
         {!media && (
@@ -97,6 +99,7 @@ function Upload() {
               id={mode == "light" ? "blogTitleWhite" : "blogTitleDark"}
               className="blogTitle"
               placeholder="Title goes here.."
+              value={state.title}
               onChange={(e) =>
                 handleTitle(state, dispatch, e.target.value, setTitleMessage)
               }
@@ -116,6 +119,7 @@ function Upload() {
               className={mode == "light" ? "textAreaLight" : "textAreaDark"}
               maxRows={20}
               minRows={20}
+              value={state.content}
               placeholder="Content goes here..."
               onChange={(e) =>
                 handleContent(
@@ -153,7 +157,9 @@ function Upload() {
               onFocus={() => setLinkFocus(true)}
               onBlur={() => setLinkFocus(false)}
               onChange={(e) => setVal(e.target.value)}
-              onKeyDown={(e) => handleKeyDown(e, data, val, setData, setVal)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, data, val, setData, setVal, dispatch)
+              }
             />
             {data?.length ? (
               <Box
@@ -165,7 +171,9 @@ function Upload() {
                     <Clear
                       fontSize="small"
                       style={{ marginLeft: 10 }}
-                      onClick={() => handleDeleteItem(data, setData, index)}
+                      onClick={() =>
+                        handleDeleteItem(data, setData, index, dispatch)
+                      }
                     />
                   </p>
                 ))}
@@ -177,8 +185,9 @@ function Upload() {
             sx={{
               width: "max-content",
               backgroundColor: mode == "dark" ? "orange" : "",
+              padding: "5px 30px",
             }}
-            onClick={() => {}}
+            onClick={() => PostBlog(state, dispatch, snack, setSnack, setData,setName)}
           >
             POST
           </Button>

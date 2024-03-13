@@ -1,38 +1,38 @@
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { ContextProvider } from "./component/context";
-import { StyledEngineProvider } from "@mui/material";
+import { Box, Button, StyledEngineProvider, TextField } from "@mui/material";
 import Router from "./helper/BrowserRouter";
-// import { useState } from "react";
-// import axios from "axios";
-// import { apiEndPoint } from "./config";
+import { useState } from "react";
+import axios from "axios";
+import { apiEndPoint } from "./config";
 
 function App() {
-  // const [file, setFile] = useState<any>();
-  // const [image, setImage] = useState([]);
-  // async function handleSubmit(image: string | ArrayBuffer | null) {
-  //   try {
-  //     console.log(file, JSON.stringify(file));
-  //     let response = await axios.post(
-  //       // `${apiEndPoint}/blogs/gargi_18`,
-  //       // "https://blogbreeze-46cn.onrender.com/blogbreeze/blogs/gajanan_14",
-  //       "http://localhost:3000/blogbreeze/blogs/gajanan_14",
-  //       {
-  //         image: image,
-  //         title: "JavaScript Basic",
-  //         content:
-  //           "Delve into backend development using Node.js. Build scalable and efficient server-side applications with JavaScript.",
-  //         related_links: JSON.stringify([
-  //           "https://reactjs.org/docs/hooks-intro.html",
-  //           "https://www.robinwieruch.de/react-hooks-fetch-data",
-  //         ]),
-  //       }
-  //     );
-  //     console.log(response);
-  //   } catch (error: any) {
-  //     console.error("Error uploading image:", error.response);
-  //   }
-  // }
+  const [file, setFile] = useState<any>();
+  const [image, setImage] = useState([]);
+  async function handleSubmit(image: string | ArrayBuffer | null) {
+    try {
+      console.log(file, JSON.stringify(file));
+      let response = await axios.post(
+        // `${apiEndPoint}/blogs/gargi_18`,
+        // "https://blogbreeze-46cn.onrender.com/blogbreeze/blogs/gajanan_14",
+        `${apiEndPoint}/blogs/gajanan_14`,
+        {
+          image: image,
+          title: "JavaScript Basic",
+          content:
+            "Delve into backend development using Node.js. Build scalable and efficient server-side applications with JavaScript.",
+          related_links: JSON.stringify([
+            "https://reactjs.org/docs/hooks-intro.html",
+            "https://www.robinwieruch.de/react-hooks-fetch-data",
+          ]),
+        }
+      );
+      console.log(response);
+    } catch (error: any) {
+      console.error("Error uploading image:", error.response);
+    }
+  }
 
   return (
     <StyledEngineProvider injectFirst>

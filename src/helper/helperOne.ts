@@ -1,4 +1,5 @@
 import { SetStateAction } from "react";
+import { PostBlog } from "../api/apicalls";
 
 function handleSidebarColor(mode: string) {
   let doc = document.querySelector(".sidebar");
@@ -43,7 +44,6 @@ function handleFileChange(
   },
   setName: { (value: SetStateAction<string>): void; (arg0: any): void }
 ) {
-  console.log(e.target);
   if (checkFileImage(e.target.files)) {
     let fs = new FileReader();
     fs.readAsDataURL(e.target.files[0]);
@@ -52,7 +52,11 @@ function handleFileChange(
       setName(e.target.files[0].name);
     };
   } else {
-    setSnack({ ...snack, open: true, message: "Invalid Image type" });
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Invalid Image type, supported types:jpeg,avif,png,jpg",
+    });
   }
 }
 
@@ -75,22 +79,29 @@ function handleKeyDown(
   data: string | any[],
   val: any,
   setData: (arg0: any) => void,
-  setVal: (arg0: string) => void
+  setVal: (arg0: string) => void,
+  dispatch: { (value: { type: any; payload: any }): void; (arg0: any): void }
 ) {
   if (e.key == "Enter" && val) {
     let temp = data.concat(val);
     setData(temp);
     setVal("");
+    dispatch({ type: "related_links", payload: JSON.stringify(temp) });
   }
 }
 function handleDeleteItem(
   data: any,
   setData: { (value: any): void; (arg0: any[]): void },
-  index: number
+  index: number,
+  dispatch: {
+    (value: { type: any; payload: any }): void;
+    (arg0: { type: string; payload: any[] }): void;
+  }
 ) {
   let pop = [...data];
   pop.splice(index, 1);
   setData(pop);
+  dispatch({ type: "related_links", payload: JSON.stringify(pop) });
 }
 
 interface Idata {
@@ -117,6 +128,8 @@ const reducerFunction = (state: any, action: { type: any; payload: any }) => {
       return { ...state, content: action.payload };
     case "related_links":
       return { ...state, related_links: action.payload };
+    case "reset":
+      return { image: "", title: "", content: "", related_links: [] };
     default:
       return state;
   }
@@ -124,7 +137,7 @@ const reducerFunction = (state: any, action: { type: any; payload: any }) => {
 function checkStringTitle(val: any, setMessage: (arg0: string) => void) {
   if (!val.trim().match(/\s/g)?.length) {
     setMessage("Title too short");
-  } else if (val.trim().match(/\s/g)?.length < 5) {
+  } else if (val.trim().match(/\s/g)?.length < 6) {
     setMessage("Title too short");
   } else if (val.trim().match(/\s/g)?.length > 10) {
     setMessage("Title too long");
@@ -155,8 +168,8 @@ function handleTitle(
   value: string,
   setMessage: { (value: SetStateAction<string>): void; (arg0: string): void }
 ) {
+  dispatch({ type: "title", payload: value });
   if (CheckTitle(value, setMessage)) {
-    dispatch({ type: "title", payload: value });
     setMessage("");
   }
 }

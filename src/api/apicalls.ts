@@ -198,6 +198,36 @@ async function handleViewLikes(
     alert(`${error}`);
   }
 }
+
+async function PostBlog(
+  state: any,
+  dispatch,
+  snack,
+  setSnack,
+  setData,
+  setName
+) {
+  try {
+    let response = await axios.post(
+      `${apiEndPoint}/blogs/${localStorage.getItem("user")}`,
+      state
+    );
+    if (response.data?.success) {
+      setSnack({ ...snack, open: true, message: "Blog posted successfully" });
+      dispatch({ type: "reset" });
+      setData([]);
+      setName("");
+      return true;
+    } else {
+      setSnack({ ...snack, open: true, message: "Blog not posted" });
+      return false;
+    }
+  } catch (e) {
+    alert(`${e}`);
+    return e;
+  }
+}
+
 export {
   loginApiCall,
   getAllBlogs,
@@ -208,4 +238,5 @@ export {
   getAllPostsApiCall,
   handleViewLikes,
   handleMyPostsLikes,
+  PostBlog,
 };
