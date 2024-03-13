@@ -165,7 +165,7 @@ function Upload() {
                 className={mode == "light" ? "listStyleLight" : "listStyleDark"}
               >
                 {data?.map((item: any, index: number) => (
-                  <p>
+                  <p key={index}>
                     {item.length < 20
                       ? `${item}`
                       : `${item.substring(0, 20)}...`}

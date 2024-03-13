@@ -91,6 +91,7 @@ function View() {
                 <Typography variant="body1">{data?.content}</Typography>
                 {data?.related_links.map((item: any, index: number) => (
                   <a
+                    key={index}
                     href={item}
                     style={{
                       display: "block",
