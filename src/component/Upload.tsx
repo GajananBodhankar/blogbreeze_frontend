@@ -30,6 +30,7 @@ function Upload() {
   const [name, setName] = useState("");
   const media = useMediaQuery("(max-width:768px)");
   const { mode } = MainContext();
+  const [user, setUser] = useState<string>("");
   const [linkFocus, setLinkFocus] = useState<boolean>(false);
   const [titleMessage, setTitleMessage] = useState("");
   const [contentMessage, setContentMessage] = useState("");
@@ -37,7 +38,8 @@ function Upload() {
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   return (
     <Box className="mainContainer">
-      <Navbar />
+           <Navbar user={user} setUser={setUser} />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>

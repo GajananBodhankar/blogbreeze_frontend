@@ -28,7 +28,7 @@ function Login() {
   const match = useMediaQuery("(max-width:768px)");
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [user, setUser] = useState<string>("");
   type verticalAlign = "top" | "bottom";
   type horizontalAlign = "left" | "center" | "right";
   const action = (
@@ -49,7 +49,7 @@ function Login() {
   const navigate = useNavigate();
   return (
     <Box className="mainContainer" gap={10}>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
 
       <Grid container justifyContent={"center"}>
         <Grid

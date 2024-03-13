@@ -42,6 +42,7 @@ function Blogs() {
   const [favorites, setFavorites] = useState<any>();
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const { mode } = MainContext();
+  const [user, setUser] = useState("");
   useEffect(() => {
     async function callGetAllBlogs() {
       setContentLoader(true);
@@ -56,7 +57,8 @@ function Blogs() {
   }, []);
   return (
     <Box className="mainContainer">
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>
@@ -171,7 +173,7 @@ function Blogs() {
                         style={{
                           color: mode == "light" ? "blue" : "orange",
                         }}
-                        className={'readMore'}
+                        className={"readMore"}
                         state={blog}
                       >
                         Read More
@@ -287,7 +289,7 @@ function Blogs() {
                         style={{
                           color: mode == "light" ? "blue" : "orange",
                         }}
-                        className={'readMore'}
+                        className={"readMore"}
                         state={blog}
                       >
                         Read More

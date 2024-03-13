@@ -9,17 +9,19 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<any>("");
   const { mode } = MainContext();
   useEffect(() => {
+    console.log("home rerenderedc");
     if (localStorage.getItem("user")) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  });
+  }, [localStorage.getItem("user")]);
   return (
     <Box className="mainContainer">
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
 
       <Grid container className="mainContent" spacing={5}>
         <Grid item md={6} xs={12}>

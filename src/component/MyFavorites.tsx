@@ -33,6 +33,7 @@ function MyFavorites() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const navigate = useNavigate();
+  const [user, setUser] = useState<string>(""); 
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const media = useMediaQuery("(max-width:768px)");
   const { mode } = MainContext();
@@ -49,7 +50,8 @@ function MyFavorites() {
   }, []);
   return (
     <Box className="mainContainer">
-      <Navbar />
+           <Navbar user={user} setUser={setUser} />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>

@@ -29,6 +29,7 @@ function Register() {
   const [username, setUsername] = useState<string>("");
   const [confirm, setConfirm] = useState<string>("");
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>("");
   const [showCnf, setShowCnf] = useState(false);
   const match = useMediaQuery("(max-width:768px)");
   useEffect(() => {
@@ -56,7 +57,8 @@ function Register() {
 
   return (
     <Box className={"mainContainer"} gap={10}>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
+
       <Grid container justifyContent={"center"}>
         <Grid
           item

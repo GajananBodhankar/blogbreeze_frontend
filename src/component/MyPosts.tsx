@@ -38,6 +38,7 @@ function MyPosts() {
   const [contentLoader, setContentLoader] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<any>();
   const { mode } = MainContext();
+  const [user, setUser] = useState<any>();
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
 
   useEffect(() => {
@@ -52,7 +53,8 @@ function MyPosts() {
   const navigate = useNavigate();
   return (
     <Box className="mainContainer">
-      <Navbar />
+           <Navbar user={user} setUser={setUser} />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>

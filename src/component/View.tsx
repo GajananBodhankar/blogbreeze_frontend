@@ -37,7 +37,7 @@ function View() {
   const [data, setData] = useState<Object | any>();
   const [favorites, setFavorites] = useState<Array<Object> | any>();
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
-
+  const [user, setUser] = useState<string>("");
   useEffect(() => {
     async function handler() {
       setContentLoader(true);
@@ -49,7 +49,8 @@ function View() {
   }, []);
   return (
     <Box className="mainContainer">
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
+
       <Grid container>
         {!media && (
           <Grid item sm={3} md={2}>

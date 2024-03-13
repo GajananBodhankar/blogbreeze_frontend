@@ -16,12 +16,11 @@ import { MainContext } from "./context";
 import { useNavigate } from "react-router-dom";
 import { AccountCircleRounded, Logout, Menu } from "@mui/icons-material";
 import { handleConfirmClose } from "../helper/helperOne";
-function Navbar() {
+function Navbar({ user, setUser }: any) {
   const { mode, setMode } = MainContext();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
   const [scrollable] = useState(false);
-  const [user, setUser] = useState<any>("");
   const [showMenu, setShowMenu] = useState(false);
   const matches = useMediaQuery("(max-width:768px)");
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
@@ -34,7 +33,9 @@ function Navbar() {
       setUser(localStorage.getItem("user"));
     } else {
       setLoggedIn(false);
+      setUser("");
     }
+    console.log("navbar rendered");
   }, [localStorage.getItem("user")]);
   return (
     <Grid
