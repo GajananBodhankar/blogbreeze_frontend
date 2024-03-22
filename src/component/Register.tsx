@@ -138,7 +138,7 @@ function Register() {
               if (typeof result === "string") {
                 setSnack({ ...snack, open: true, message: result });
               } else if (result) {
-                setSnack({ ...snack, open: true, message: "Login Success" });
+                setSnack({ ...snack, open: true, message: "Registration Success" });
                 setTimeout(() => {
                   navigate("/login", { replace: true });
                 }, 3000);
