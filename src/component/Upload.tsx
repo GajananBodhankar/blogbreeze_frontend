@@ -12,6 +12,7 @@ import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
+  checkBlogPostData,
   handleContent,
   handleDeleteItem,
   handleFileChange,
@@ -209,7 +210,7 @@ function Upload() {
               </Box>
             ) : null}
           </Box>
-          <Box>
+          <Box display={"flex"} gap={10}>
             <Button
               variant="contained"
               style={{
@@ -218,7 +219,7 @@ function Upload() {
                 padding: "5px 30px",
               }}
               onClick={async () => {
-                if (props.state._id) {
+                if (!props.state) {
                   PostBlog(state, dispatch, snack, setSnack, setData, setName);
                 } else {
                   try {
@@ -230,9 +231,8 @@ function Upload() {
                         data: { ...state, _id: props.state._id },
                       }
                     );
-                    console.log(res);
                   } catch (error) {
-                    console.log(error);
+                    alert(`${error}`);
                   }
                 }
               }}
@@ -241,15 +241,22 @@ function Upload() {
             </Button>
             {props.state && (
               <Button
+                variant="contained"
+                style={{
+                  width: "max-content",
+                  backgroundColor: mode == "dark" ? "orange" : "#1976d2",
+                  padding: "5px 30px",
+                }}
                 onClick={async () => {
                   try {
                     let result = await axios.delete(
-                      `${apiEndPoint}/blogs/delete/${localStorage.getItem(
+                      `http://localhost:3000/blogbreeze/blogs/delete/${localStorage.getItem(
                         "user"
                       )}/${props.state._id}`
                     );
                     if (result.data?.success) {
                       alert("Deleted successfully");
+                      dispatch({ type: "reset", payload: [] });
                     }
                   } catch (error) {
                     alert("Error deleting");

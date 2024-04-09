@@ -217,6 +217,8 @@ function checkBlogPostData(
     (arg0: any): void;
   }
 ) {
+  const urlPattern =
+    /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
   if (
     !state.image &&
     !state.title &&
@@ -260,19 +262,32 @@ function checkBlogPostData(
     return false;
   }
   if (typeof state.related_links === "string") {
-    if (JSON.parse(state.related_links).length < 2)
+    if (JSON.parse(state.related_links).length < 2) {
       setSnack({
         ...snack,
         open: true,
         message: "Please add at least 2 related links",
       });
+      return false;
+    }
   } else if ([...state.related_links].length < 2) {
     setSnack({
       ...snack,
       open: true,
       message: "Please add at least 2 related links",
     });
+    return false;
   }
+  if (!JSON.parse(state.related_links).every((i) => urlPattern.test(i))) {
+    console.log("hi");
+    setSnack({
+      ...snack,
+      open: true,
+      message: "Please add links only",
+    });
+    return false;
+  }
+
   return true;
 }
 
