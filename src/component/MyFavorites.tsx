@@ -99,7 +99,6 @@ function MyFavorites() {
                           ? blog.title.slice(0, 40) + "..."
                           : blog.title}
                       </Typography>
-                      {blog._id}
                     </CardContent>
                     <CardActions>
                       {blog.likedUsers.includes(

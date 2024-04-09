@@ -69,7 +69,7 @@ async function getUserFavorites(setFavorites: {
       setFavorites(response.data);
     }
   } catch (e: any) {
-    alert(e.response.data.message);
+    alert(e.response?.data?.message);
   }
 }
 async function handleFavoriteLikes(
@@ -146,7 +146,7 @@ async function getAllPostsApiCall(setAllPosts: (arg0: any) => void) {
       setAllPosts(result.data);
     }
   } catch (e: any) {
-    alert(e.response.data.message);
+    alert(e.response?.data?.message);
   }
 }
 

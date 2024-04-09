@@ -20,12 +20,16 @@ import {
   initialState,
   reducerFunction,
 } from "../helper/helperOne";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { Clear } from "@mui/icons-material";
 import { MainContext } from "./context";
 import CustomSnackBar from "../helper/CustomSnackBar";
 import { PostBlog } from "../api/apicalls";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { apiEndPoint } from "../config";
 function Upload() {
+  const props = useLocation();
   const [data, setData] = useState<any>([]);
   const [val, setVal] = useState("");
   const [name, setName] = useState("");
@@ -37,6 +41,25 @@ function Upload() {
   const [contentMessage, setContentMessage] = useState("");
   const [state, dispatch] = useReducer(reducerFunction, initialState);
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
+  useEffect(() => {
+    console.log(props.state);
+    if (props.state) {
+      if (!state.image) {
+        dispatch({ type: "image", payload: props.state.image });
+      }
+      if (!state.title) {
+        dispatch({ type: "title", payload: props.state.title });
+      }
+      if (!state.content) {
+        dispatch({ type: "content", payload: props.state.content });
+      }
+      if (state.related_links.length == 0) {
+        dispatch({ type: "related_links", payload: props.state.related_links });
+        setData(props.state.related_links);
+      }
+    } else {
+    }
+  }, []);
   return (
     <Box className="mainContainer">
       <Navbar user={user} setUser={setUser} />
@@ -91,6 +114,11 @@ function Upload() {
             >
               {name}
             </Typography>
+            <img
+              src={state.image}
+              alt=""
+              style={{ width: 200, height: "auto", marginTop: 10 }}
+            />
           </Box>
           <Box>
             <TextField
@@ -181,19 +209,57 @@ function Upload() {
               </Box>
             ) : null}
           </Box>
-          <Button
-            variant="contained"
-            style={{
-              width: "max-content",
-              backgroundColor: mode == "dark" ? "orange" : "#1976d2",
-              padding: "5px 30px",
-            }}
-            onClick={() =>
-              PostBlog(state, dispatch, snack, setSnack, setData, setName)
-            }
-          >
-            POST
-          </Button>
+          <Box>
+            <Button
+              variant="contained"
+              style={{
+                width: "max-content",
+                backgroundColor: mode == "dark" ? "orange" : "#1976d2",
+                padding: "5px 30px",
+              }}
+              onClick={async () => {
+                if (props.state._id) {
+                  PostBlog(state, dispatch, snack, setSnack, setData, setName);
+                } else {
+                  try {
+                    let res = await axios.put(
+                      `http://localhost:3000/blogbreeze/blogs/edit/${localStorage.getItem(
+                        "user"
+                      )}/${props.state._id}`,
+                      {
+                        data: { ...state, _id: props.state._id },
+                      }
+                    );
+                    console.log(res);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }
+              }}
+            >
+              POST
+            </Button>
+            {props.state && (
+              <Button
+                onClick={async () => {
+                  try {
+                    let result = await axios.delete(
+                      `${apiEndPoint}/blogs/delete/${localStorage.getItem(
+                        "user"
+                      )}/${props.state._id}`
+                    );
+                    if (result.data?.success) {
+                      alert("Deleted successfully");
+                    }
+                  } catch (error) {
+                    alert("Error deleting");
+                  }
+                }}
+              >
+                Delete
+              </Button>
+            )}
+          </Box>
         </Grid>
       </Grid>
       <Sidebar isFixed={true} />

@@ -32,6 +32,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { MainContext } from "./context";
 import CustomSnackBar from "../helper/CustomSnackBar";
+import EditIcon from "@mui/icons-material/Edit";
 function MyPosts() {
   const media = useMediaQuery("(max-width:768px)");
   const [myPosts, setMyPosts] = useState<any>();
@@ -171,6 +172,12 @@ function MyPosts() {
                       >
                         Read More
                       </Link>
+                      <EditIcon
+                        onClick={() => {
+                          navigate("/upload", { state: blog });
+                          // console.log(blog);
+                        }}
+                      />
                     </CardActions>
                   </Card>
                 </Grid>
