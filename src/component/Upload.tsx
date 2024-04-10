@@ -6,13 +6,15 @@ import {
   TextareaAutosize,
   useMediaQuery,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogTitle,
 } from "@mui/material";
 import Navbar from "./Navbar";
 import Sidebar from "../helper/Sidebar";
 import Footer from "./footer";
 import "./upload.css";
 import {
-  checkBlogPostData,
   handleContent,
   handleDeleteItem,
   handleFileChange,
@@ -26,7 +28,7 @@ import { Clear } from "@mui/icons-material";
 import { MainContext } from "./context";
 import CustomSnackBar from "../helper/CustomSnackBar";
 import { PostBlog } from "../api/apicalls";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiEndPoint } from "../config";
 function Upload() {
@@ -42,8 +44,9 @@ function Upload() {
   const [contentMessage, setContentMessage] = useState("");
   const [state, dispatch] = useReducer(reducerFunction, initialState);
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
+  const [confirm, setConfirm] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(props.state);
     if (props.state) {
       if (!state.image) {
         dispatch({ type: "image", payload: props.state.image });
@@ -224,20 +227,28 @@ function Upload() {
                 } else {
                   try {
                     let res = await axios.put(
-                      `http://localhost:3000/blogbreeze/blogs/edit/${localStorage.getItem(
+                      `${apiEndPoint}/blogs/edit/${localStorage.getItem(
                         "user"
                       )}/${props.state._id}`,
                       {
                         data: { ...state, _id: props.state._id },
                       }
                     );
+                    if (res?.data?.success) {
+                      setSnack({
+                        ...snack,
+                        open: true,
+                        message: "Blog edited successfully",
+                      });
+                      navigate("/blogs");
+                    }
                   } catch (error) {
                     alert(`${error}`);
                   }
                 }
               }}
             >
-              POST
+              {props.state ? "DONE" : "POST"}
             </Button>
             {props.state && (
               <Button
@@ -248,19 +259,7 @@ function Upload() {
                   padding: "5px 30px",
                 }}
                 onClick={async () => {
-                  try {
-                    let result = await axios.delete(
-                      `http://localhost:3000/blogbreeze/blogs/delete/${localStorage.getItem(
-                        "user"
-                      )}/${props.state._id}`
-                    );
-                    if (result.data?.success) {
-                      alert("Deleted successfully");
-                      dispatch({ type: "reset", payload: [] });
-                    }
-                  } catch (error) {
-                    alert("Error deleting");
-                  }
+                  setConfirm(true);
                 }}
               >
                 Delete
@@ -269,6 +268,40 @@ function Upload() {
           </Box>
         </Grid>
       </Grid>
+      <Dialog open={confirm}>
+        <DialogTitle>Are you Sure?</DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={async () => {
+              try {
+                let result = await axios.delete(
+                  `${apiEndPoint}/blogs/delete/${localStorage.getItem(
+                    "user"
+                  )}/${props.state._id}`
+                );
+                if (result.data?.success) {
+                  setSnack({
+                    ...snack,
+                    open: true,
+                    message: "Blog deleted successfully",
+                  });
+                  dispatch({ type: "reset", payload: [] });
+                  navigate("/blogs");
+                }
+              } catch (error) {
+                setSnack({
+                  ...snack,
+                  open: true,
+                  message: "Error in deletion",
+                });
+              }
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={() => setConfirm(false)}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
       <Sidebar isFixed={true} />
       <CustomSnackBar snack={snack} setSnack={setSnack} />
       <Footer />
