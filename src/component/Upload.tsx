@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  LinearProgress,
 } from "@mui/material";
 import Navbar from "./Navbar";
 import Sidebar from "../helper/Sidebar";
@@ -45,6 +46,7 @@ function Upload() {
   const [state, dispatch] = useReducer(reducerFunction, initialState);
   const [snack, setSnack] = useState({ open: false, message: "", color: "" });
   const [confirm, setConfirm] = useState(false);
+  const [progressShow, setProgressShow] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (props.state) {
@@ -213,6 +215,10 @@ function Upload() {
               </Box>
             ) : null}
           </Box>
+          {progressShow && (
+            <LinearProgress color="warning" style={{ width: "50%" }} />
+          )}
+
           <Box display={"flex"} gap={10}>
             <Button
               variant="contained"
@@ -223,8 +229,12 @@ function Upload() {
               }}
               onClick={async () => {
                 if (!props.state) {
+                  setProgressShow(true);
                   PostBlog(state, dispatch, snack, setSnack, setData, setName);
+                  setProgressShow(false);
                 } else {
+                  setProgressShow(true);
+
                   try {
                     let res = await axios.put(
                       `${apiEndPoint}/blogs/edit/${localStorage.getItem(
@@ -245,6 +255,7 @@ function Upload() {
                   } catch (error) {
                     alert(`${error}`);
                   }
+                  setProgressShow(false);
                 }
               }}
             >
@@ -273,6 +284,7 @@ function Upload() {
         <DialogActions>
           <Button
             onClick={async () => {
+              setProgressShow(true);
               try {
                 let result = await axios.delete(
                   `${apiEndPoint}/blogs/delete/${localStorage.getItem(
@@ -295,6 +307,7 @@ function Upload() {
                   message: "Error in deletion",
                 });
               }
+              setProgressShow(false);
             }}
           >
             Yes
