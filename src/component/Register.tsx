@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   LinearProgress,
@@ -8,7 +9,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./footer";
 import "./register.css";
@@ -19,7 +20,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
 import CustomInputField from "./CustomInputField";
 import CloseIcon from "@mui/icons-material/Close";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+let LazyImage = lazy(() => import("../helper/LazyRegisterImage"));
 function Register() {
   const { mode } = MainContext();
   const [show, setShow] = useState(false);
@@ -67,12 +68,11 @@ function Register() {
           xs={10}
           gap={3}
         >
-          <LazyLoadImage
-            effect="blur"
-            src="Data_security_05.jpg"
-            className="registerImage"
-            loading="lazy"
-          />
+          <Suspense
+            fallback={<CircularProgress style={{ alignSelf: "center" }} />}
+          >
+            <LazyImage />
+          </Suspense>
           <CustomInputField
             lable={"username"}
             Icon={AccountCircle}
@@ -138,7 +138,11 @@ function Register() {
               if (typeof result === "string") {
                 setSnack({ ...snack, open: true, message: result });
               } else if (result) {
-                setSnack({ ...snack, open: true, message: "Registration Success" });
+                setSnack({
+                  ...snack,
+                  open: true,
+                  message: "Registration Success",
+                });
                 setTimeout(() => {
                   navigate("/login", { replace: true });
                 }, 3000);

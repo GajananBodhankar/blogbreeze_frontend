@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import "./home.css";
 import Footer from "./footer";
-import { Box, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MainContext } from "./context";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-
+let LazyImage = lazy(() => import("../helper/LazyHomeImage"));
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<any>("");
@@ -64,13 +63,11 @@ function Home() {
           )}
         </Grid>
         <Grid item className="imgDiv" md={5} xs={12}>
-          <LazyLoadImage
-            effect="blur"
-            src="5174551.jpg"
-            alt="Image not found"
-            loading="lazy"
-            className="homeImage"
-          />
+          <Suspense
+            fallback={<CircularProgress style={{ alignSelf: "center" }} />}
+          >
+            <LazyImage />
+          </Suspense>
         </Grid>
       </Grid>
 

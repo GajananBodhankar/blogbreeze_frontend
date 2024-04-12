@@ -1,13 +1,14 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   LinearProgress,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./footer";
 import EmailIcon from "@mui/icons-material/Email";
@@ -19,7 +20,7 @@ import CustomInputField from "./CustomInputField";
 import { loginApiCall } from "../api/apicalls";
 import CloseIcon from "@mui/icons-material/Close";
 import Snackbar from "@mui/material/Snackbar";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+let LazyImage = lazy(() => import("../helper/LazyLoginImage"));
 function Login() {
   const [show, setShow] = useState(false);
   const { mode } = MainContext();
@@ -59,12 +60,11 @@ function Login() {
           xs={10}
           gap={3}
         >
-          <LazyLoadImage
-            effect="blur"
-            src="6343825.jpg"
-            loading="lazy"
-            className="loginImage"
-          />
+          <Suspense
+            fallback={<CircularProgress style={{ alignSelf: "center" }} />}
+          >
+            <LazyImage />
+          </Suspense>
           <CustomInputField
             lable="email"
             Icon={EmailIcon}
