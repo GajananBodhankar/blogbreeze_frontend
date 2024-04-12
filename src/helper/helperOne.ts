@@ -278,7 +278,9 @@ function checkBlogPostData(
     });
     return false;
   }
-  if (!JSON.parse(state.related_links).every((i) => urlPattern.test(i))) {
+  if (
+    !JSON.parse(state.related_links).every((i: string) => urlPattern.test(i))
+  ) {
     console.log("hi");
     setSnack({
       ...snack,
